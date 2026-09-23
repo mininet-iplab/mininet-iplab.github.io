@@ -26,49 +26,31 @@ export default defineConfig({
       disable404Route: true,
       sidebar: [
         {
-          label: 'Understand',
-          items: [
-            { label: 'Overview', slug: 'docs/understand' },
-            {
-              label: 'Routing and Link Conditions',
-              items: [
-                { label: 'Learning path', slug: 'docs/understand/routing-and-link-conditions' },
-                {
-                  label: 'Static routing',
-                  slug: 'docs/understand/routing-and-link-conditions/static-routing',
-                },
-                { label: 'OSPF', slug: 'docs/understand/routing-and-link-conditions/ospf' },
-                { label: 'BGP', slug: 'docs/understand/routing-and-link-conditions/bgp' },
-                {
-                  label: 'IPv4 and IPv6',
-                  slug: 'docs/understand/routing-and-link-conditions/ip-addressing',
-                },
-                {
-                  label: 'Link Conditions',
-                  slug: 'docs/understand/routing-and-link-conditions/link-conditions',
-                },
-              ],
-            },
-          ],
-        },
-        {
           label: 'Get Started',
           items: [
-            { label: 'Overview', slug: 'docs/getting-started' },
-            { label: 'First Lab quickstart', slug: 'docs/getting-started/quickstart' },
+            { label: 'Prerequisites', slug: 'docs/getting-started/prerequisites' },
+            { label: 'Quick Start', slug: 'docs/getting-started/quickstart' },
+            { label: 'Classroom deployment', slug: 'docs/getting-started/classroom' },
           ],
         },
         {
-          label: 'Build Labs',
-          items: [{ label: 'Overview', slug: 'docs/build-labs' }],
+          label: 'Create a Lab',
+          items: [{ label: 'How to create a Lab', slug: 'docs/build-labs' }],
         },
         {
-          label: 'Lab Examples',
-          items: [{ label: 'Overview', slug: 'docs/lab-examples' }],
-        },
-        {
-          label: 'Web UI',
-          items: [{ label: 'Overview', slug: 'docs/web-ui' }],
+          label: 'Features',
+          items: [
+            { label: 'Overview', slug: 'docs/features' },
+            { label: 'Static routing', slug: 'docs/features/static-routing' },
+            { label: 'OSPF', slug: 'docs/features/ospf' },
+            { label: 'BGP', slug: 'docs/features/bgp' },
+            { label: 'IPv4 and IPv6', slug: 'docs/features/ipv6' },
+            { label: 'DHCP', slug: 'docs/features/dhcp' },
+            { label: 'DNS', slug: 'docs/features/dns' },
+            { label: 'DNSSEC', slug: 'docs/features/dnssec' },
+            { label: 'Container Hosts', slug: 'docs/features/container-hosts' },
+            { label: 'ExaBGP (Experimental)', slug: 'docs/features/exabgp' },
+          ],
         },
         {
           label: 'Reference',

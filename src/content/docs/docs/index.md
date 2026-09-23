@@ -3,15 +3,26 @@ title: Documentation
 description: Intent-first documentation for learning and teaching with Mininet-IPLab.
 ---
 
-Mininet-IPLab is a network emulation framework for teaching IP routing and core network services on top of Mininet.
+<p class="doc-lede">Mininet-IPLab makes routing and network-service behavior observable in a classroom network built on
+Mininet.</p>
 
-This documentation site is organized around the work you want to do:
+Use this path if you are new to the project:
 
-- [Understand the model](/docs/understand/) — learn how Labs, Topologies, Nodes, and Links fit together.
-- [Get started](/docs/getting-started/) — prepare a Linux-capable host and run your first Lab.
-- [Build Labs](/docs/build-labs/) — author Lab Examples for a concrete lesson.
+1. [Check the prerequisites](/docs/getting-started/prerequisites/) — prepare a Linux-capable host, Docker, and Open
+   vSwitch.
+2. [Run the Quick Start](/docs/getting-started/quickstart/) — start `static-lab` and observe a working route.
+3. [Create a Lab](/docs/build-labs/) — turn a lesson plan into a Python Lab Example.
+4. [Add a feature](/docs/features/) — copy the exact authoring pattern for routing, services, IPv6, containers, or
+   ExaBGP.
 
-The remaining sections provide paths to Lab Examples, Web UI Mode, lookup-oriented Reference material, and contribution guidance. They are being filled in as the documentation product grows.
+## After your first Lab
+
+- [Run a classroom](/docs/getting-started/classroom/) — start `mniplab serve` and configure Instructor/Learner access.
+- [Browse the Reference](/docs/reference/) — find exact commands, settings, and public Python names.
+- [Contribute](/docs/contribute/) — choose the right repository and run the project checks.
+
+Use the [core repository](https://github.com/mininet-iplab/mininet-iplab) for executable Lab Examples and the runtime
+Web UI source.
 
 <div class="channel-note">
 

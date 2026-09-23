@@ -30,11 +30,11 @@ test('the production artifact contains the landing page and documentation route'
 
   assert.match(landingHtml, /Mininet-IPLab/);
   assert.match(landingHtml, /href="\/docs\/"/);
-  assert.match(documentationHtml, /Understand/);
+  assert.match(documentationHtml, /Reference/);
   assert.match(documentationHtml, /Get Started/);
 });
 
-test('the landing page presents the project and the two visitor paths', () => {
+test('the landing page presents the project and the ordered documentation path', () => {
   const landingHtml = readFileSync(join(root, 'dist', 'index.html'), 'utf8');
 
   assert.match(
@@ -42,24 +42,11 @@ test('the landing page presents the project and the two visitor paths', () => {
     /Mininet-IPLab is a network emulation framework for teaching IP routing and core network services on top of Mininet\./,
   );
   assert.match(landingHtml, /alt="Mininet-IPLab Web UI showing a running Lab with a topology and browser terminals"/);
-  assert.match(landingHtml, /href="\/docs\/understand\/"/);
-  assert.match(landingHtml, /href="\/docs\/getting-started\/"/);
+  assert.match(landingHtml, /href="\/docs\/getting-started\/prerequisites\/"/);
   assert.match(landingHtml, /href="\/docs\/getting-started\/quickstart\/"/);
-});
-
-test('the Understand page explains the stable Lab model', () => {
-  const understandHtml = readBuiltPage('docs/understand');
-  const understandText = visibleText(understandHtml);
-
-  assert.match(understandText, /Stable.*core.*v0\.1\.0/);
-  assert.match(understandText, /Lab Example/);
-  assert.match(understandText, /Guide/);
-  assert.match(understandText, /Layout/);
-  assert.match(understandText, /Exercise Configuration/);
-  assert.match(understandText, /Lab.*Topology/);
-  assert.match(understandText, /Topology.*Nodes.*Links/);
-  assert.match(understandText, /Link.*connects/);
-  assert.match(understandHtml, /href="\/docs\/build-labs\/"/);
+  assert.match(landingHtml, /href="\/docs\/build-labs\/"/);
+  assert.match(landingHtml, /href="\/docs\/features\/"/);
+  assert.match(landingHtml, /href="\/docs\/getting-started\/classroom\/"/);
 });
 
 test('the Get Started page gives the stable installation path and platform caveat', () => {
@@ -72,10 +59,44 @@ test('the Get Started page gives the stable installation path and platform cavea
   assert.match(gettingStartedText, /Open vSwitch kernel modules.*host/);
   assert.match(gettingStartedText, /macOS.*Windows/);
   assert.match(gettingStartedText, /Linux VM/);
-  assert.match(gettingStartedText, /docker compose build/);
-  assert.match(gettingStartedText, /docker compose up -d/);
-  assert.match(gettingStartedText, /docker compose exec mniplab python3 examples\/static-lab\.py --enable-web/);
-  assert.match(gettingStartedText, /localhost:8050/);
+  assert.match(gettingStartedText, /Choose your path/);
+  assert.match(gettingStartedText, /Quick Start/);
+  assert.match(gettingStartedText, /Classroom deployment/);
+  assert.match(gettingStartedHtml, /href="\/docs\/getting-started\/quickstart\/"/);
+});
+
+test('the Prerequisites page makes the host checks explicit', () => {
+  const prerequisitesHtml = readBuiltPage('docs/getting-started/prerequisites');
+  const prerequisitesText = visibleText(prerequisitesHtml);
+
+  assert.match(prerequisitesText, /Stable.*core.*v0\.1\.0/);
+  assert.match(prerequisitesText, /64-bit Linux-capable host/);
+  assert.match(prerequisitesText, /Docker Engine.*Docker Compose/);
+  assert.match(prerequisitesText, /Open vSwitch kernel modules.*host/);
+  assert.match(prerequisitesText, /docker info/);
+  assert.match(prerequisitesText, /docker compose version/);
+  assert.match(prerequisitesHtml, /href="\/docs\/getting-started\/quickstart\/"/);
+});
+
+test('the Classroom deployment page documents mniplab serve and .env roles', () => {
+  const classroomHtml = readBuiltPage('docs/getting-started/classroom');
+  const classroomText = visibleText(classroomHtml);
+
+  assert.match(classroomText, /Development.*core revision/);
+  assert.match(classroomText, /mniplab serve/);
+  assert.match(classroomText, /examples\/labs\.json/);
+  assert.match(classroomText, /Instructor/);
+  assert.match(classroomText, /Learner/);
+  assert.match(classroomText, /MNIPLAB_USERS/);
+  assert.match(classroomText, /MNIPLAB_ENVIRONMENT=production/);
+  assert.match(classroomText, /MNIPLAB_CORS_ORIGINS/);
+  assert.match(classroomText, /MNIPLAB_USE_SECURE_COOKIES/);
+  assert.match(classroomText, /docker compose exec mniplab mniplab serve/);
+  assert.match(classroomText, /docker compose exec mniplab mniplab cleanup/);
+  assert.match(
+    classroomHtml,
+    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a\/mniplab\/__main__\.py"/,
+  );
 });
 
 test('the First Lab quickstart guides static-lab observations and recovery', () => {
@@ -125,6 +146,8 @@ test('the Build Labs guide explains the model and authoring seam', () => {
   assert.match(buildLabsText, /examples\/.*lab-name.*layout\.json/);
   assert.match(buildLabsText, /examples\/layouts\/.*lab-id.*json/);
   assert.match(buildLabsText, /examples\/guides\/.*lab-id.*md/);
+  assert.match(buildLabsText, /The authoring path/);
+  assert.match(buildLabsText, /Features/);
   assert.match(buildLabsText, /Service/);
   assert.match(
     buildLabsHtml,
@@ -140,68 +163,42 @@ test('the Build Labs guide explains the model and authoring seam', () => {
   );
 });
 
-test('the routing learning path exposes stable concepts and tasks', () => {
-  const learningPathHtml = readBuiltPage('docs/understand/routing-and-link-conditions');
-  const learningPathText = visibleText(learningPathHtml);
-
-  assert.match(learningPathText, /Stable.*core.*v0\.1\.0/);
-  for (const topic of ['Static routing', 'OSPF', 'BGP', 'IPv4', 'IPv6', 'Link Conditions']) {
-    assert.match(learningPathText, new RegExp(topic), `${topic} is missing from the routing learning path`);
-  }
-  assert.match(learningPathText, /Experimental.*ExaBGP Speaker/);
-  for (const destination of [
-    'static-routing',
-    'ospf',
+test('the Features guide and recipes explain how to attach capabilities to a Lab', () => {
+  const featurePages = [
     'bgp',
-    'ip-addressing',
-    'link-conditions',
-  ]) {
-    assert.match(learningPathHtml, new RegExp(`/docs/understand/routing-and-link-conditions/${destination}/`));
-  }
-});
+    'container-hosts',
+    'dhcp',
+    'dns',
+    'dnssec',
+    'exabgp',
+    'ipv6',
+    'ospf',
+    'static-routing',
+  ];
+  const featuresHtml = readBuiltPage('docs/features');
+  const featuresText = visibleText(featuresHtml);
 
-test('the routing concept pages pair observations with exact Stable source links', () => {
-  const pages = {
-    'static-routing': ['static-lab.py', 'static route', '192.168.2.0/24'],
-    ospf: ['ospf-lab.py', 'show ip ospf neighbor', 'OSPF neighbor'],
-    bgp: ['bgp-lab.py', 'show bgp summary', 'autonomous system'],
-    'ip-addressing': ['static-lab-ipv6.py', 'ip6', 'defaultRoute6'],
-  };
+  assert.match(featuresText, /Development.*core revision/);
+  assert.match(featuresText, /Where does it attach/);
+  assert.match(featuresText, /Create a Lab/);
 
-  for (const [page, terms] of Object.entries(pages)) {
-    const html = readBuiltPage(`docs/understand/routing-and-link-conditions/${page}`);
+  for (const page of featurePages) {
+    const html = readBuiltPage(`docs/features/${page}`);
     const pageText = visibleText(html);
 
-    assert.match(pageText, /Stable.*core.*v0\.1\.0/, `${page} does not identify Stable v0.1.0`);
-    for (const term of terms) {
-      assert.match(pageText, new RegExp(term, 'i'), `${term} is missing from ${page}`);
-    }
+    assert.match(pageText, /Development|Experimental/, `${page} maturity is missing`);
+    assert.match(pageText, /Add it to a Lab/, `${page} has no authoring section`);
+    assert.match(pageText, /Verify it/, `${page} has no verification section`);
     assert.match(
       html,
-      /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/(?:blob|tree)\/v0\.1\.0\//,
-      `${page} does not link to the pinned Stable source`,
+      /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a\//,
+      `${page} does not link to the pinned source revision`,
     );
   }
 });
 
-test('the Link Conditions page keeps connectivity controls separate from routing state', () => {
-  const linkConditionsHtml = readBuiltPage('docs/understand/routing-and-link-conditions/link-conditions');
-  const linkConditionsText = visibleText(linkConditionsHtml);
-
-  assert.match(linkConditionsText, /Stable.*core.*v0\.1\.0/);
-  assert.match(linkConditionsText, /Learner/);
-  for (const term of ['disconnect', 'reconnect', 'delay', 'loss', 'bandwidth', 'routing protocol']) {
-    assert.match(linkConditionsText, new RegExp(term, 'i'), `${term} is missing from Link Conditions guidance`);
-  }
-  assert.match(linkConditionsText, /does not change.*route|not.*routing protocol/i);
-  assert.match(
-    linkConditionsHtml,
-    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/v0\.1\.0\/docs\/web-ui\.md"/,
-  );
-});
-
 test('each published documentation page identifies the Stable release', () => {
-  const stablePages = ['docs', 'docs/understand', 'docs/getting-started', 'docs/web-ui', 'docs/contribute'];
+  const stablePages = ['docs', 'docs/getting-started', 'docs/contribute'];
 
   for (const page of stablePages) {
     assert.match(visibleText(readBuiltPage(page)), /Stable.*core.*v0\.1\.0/, `${page} does not identify Stable v0.1.0`);
@@ -209,7 +206,7 @@ test('each published documentation page identifies the Stable release', () => {
 });
 
 test('unfinished documentation sections identify themselves as Development', () => {
-  const developmentPages = ['docs/build-labs', 'docs/lab-examples', 'docs/reference'];
+  const developmentPages = ['docs/build-labs', 'docs/reference'];
 
   for (const page of developmentPages) {
     assert.match(visibleText(readBuiltPage(page)), /Development/, `${page} does not identify Development content`);
@@ -220,18 +217,21 @@ test('unfinished documentation sections identify themselves as Development', () 
 test('the documentation shell exposes each intent-first navigation destination', () => {
   const documentationHtml = readFileSync(join(root, 'dist', 'docs', 'index.html'), 'utf8');
   const destinations = [
-    'understand',
     'getting-started',
+    'getting-started/prerequisites',
     'getting-started/quickstart',
-    'understand/routing-and-link-conditions',
-    'understand/routing-and-link-conditions/static-routing',
-    'understand/routing-and-link-conditions/ospf',
-    'understand/routing-and-link-conditions/bgp',
-    'understand/routing-and-link-conditions/ip-addressing',
-    'understand/routing-and-link-conditions/link-conditions',
+    'getting-started/classroom',
+    'features',
+    'features/static-routing',
+    'features/ospf',
+    'features/bgp',
+    'features/ipv6',
+    'features/dhcp',
+    'features/dns',
+    'features/dnssec',
+    'features/container-hosts',
+    'features/exabgp',
     'build-labs',
-    'lab-examples',
-    'web-ui',
     'reference',
     'contribute',
   ];

@@ -3,16 +3,34 @@ import '../styles/landing.css';
 
 const paths = [
   {
-    title: 'Understand the Lab model',
-    text: 'Understand Labs, Topologies, Nodes, Links, and the vocabulary used throughout the project.',
-    href: '/docs/understand/',
-    label: 'Understand Mininet-IPLab',
+    title: 'Check the prerequisites',
+    text: 'Prepare a Linux-capable host, Docker, and Open vSwitch before you start a Lab.',
+    href: '/docs/getting-started/prerequisites/',
+    label: 'Check the prerequisites',
   },
   {
-    title: 'Install and run a first Lab',
-    text: 'Prepare a Linux-capable host, install the Stable release, and run the canonical static-routing Lab Example.',
+    title: 'Run the Quick Start',
+    text: 'Start the canonical static-routing Lab, prove traffic crosses it, and shut it down cleanly.',
     href: '/docs/getting-started/quickstart/',
-    label: 'Open the First Lab quickstart',
+    label: 'Open the Quick Start',
+  },
+  {
+    title: 'Create a Lab',
+    text: 'Turn a networking lesson into a Python Lab Example with the right Nodes, Links, and Guide.',
+    href: '/docs/build-labs/',
+    label: 'Learn how to create a Lab',
+  },
+  {
+    title: 'Add a feature',
+    text: 'Use copyable, source-backed patterns for routing, DHCP, DNS, IPv6, containers, and ExaBGP.',
+    href: '/docs/features/',
+    label: 'Browse feature recipes',
+  },
+  {
+    title: 'Run a classroom',
+    text: 'Start one Lab for an Instructor and Learners with mniplab serve and role-based .env accounts.',
+    href: '/docs/getting-started/classroom/',
+    label: 'Open classroom deployment',
   },
   {
     title: 'Contribute to the project',
@@ -75,8 +93,8 @@ const paths = [
             Mininet. Run a Lab from the CLI or browser, inspect what happens, and connect the behavior to the lesson.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="/docs/understand/">Understand the model <span aria-hidden="true">↗</span></a>
-            <a class="button button-secondary" href="/docs/getting-started/">Get started</a>
+            <a class="button button-primary" href="/docs/getting-started/prerequisites/">Start with prerequisites <span aria-hidden="true">↗</span></a>
+            <a class="button button-secondary" href="/docs/getting-started/quickstart/">Run the Quick Start</a>
           </div>
         </div>
         <figure class="hero-demo">
@@ -97,7 +115,7 @@ const paths = [
         </figure>
       </section>
 
-      <section class="overview shell" id="overview" aria-labelledby="overview-title">
+      <!-- <section class="overview shell" id="overview" aria-labelledby="overview-title">
         <div class="overview-grid">
           <h2 id="overview-title">A practical way to teach how networks behave.</h2>
           <p>
@@ -105,37 +123,19 @@ const paths = [
             framework and the documentation around it. The site gives each audience a clear place to begin.
           </p>
         </div>
-      </section>
+      </section> -->
 
       <section class="architecture shell" id="architecture" aria-labelledby="architecture-title">
         <div class="section-heading">
-          <h2 id="architecture-title">One model from recipe to running Lab.</h2>
+          <h2 id="architecture-title">How the system fits together.</h2>
           <p>
-            Start with a Lab Example, a Python recipe that builds one Lab. The running Lab has a Topology made from
-            Nodes and Links, so a lesson can connect a routing concept to observable behavior.
+            A short architecture overview will be added here. It will explain how a Lab Example becomes a running Lab,
+            and where Mininet, routing daemons, Services, CLI Mode, and Web UI Mode fit.
           </p>
         </div>
-        <div class="model-grid" aria-label="Mininet-IPLab Lab model">
-          <article class="model-step">
-            <span class="model-step-number" aria-hidden="true">01</span>
-            <h3>Lab Example</h3>
-            <p>A Python recipe that creates a concrete teaching Lab.</p>
-          </article>
-          <article class="model-step">
-            <span class="model-step-number" aria-hidden="true">02</span>
-            <h3>Lab</h3>
-            <p>One emulated network running now, with its current routing state.</p>
-          </article>
-          <article class="model-step">
-            <span class="model-step-number" aria-hidden="true">03</span>
-            <h3>Topology</h3>
-            <p>The Lab’s shape: its Nodes and the Links that connect them.</p>
-          </article>
-          <article class="model-step">
-            <span class="model-step-number" aria-hidden="true">04</span>
-            <h3>Observe</h3>
-            <p>Use CLI Mode or Web UI Mode to inspect what the Lab is doing.</p>
-          </article>
+        <div class="architecture-placeholder" aria-label="Architecture overview placeholder">
+          <span>Placeholder</span>
+          <p>Architecture diagram and implementation notes will be added here.</p>
         </div>
       </section>
 

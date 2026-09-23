@@ -9,10 +9,14 @@ description: Run and observe the canonical static-routing Lab Example.
 
 </div>
 
-Use `static-lab` as the first successful Lab. It is deliberately small: two Hosts, two Routers, and three Links
-demonstrate how manually configured routes carry traffic between two networks. Start with the [Stable installation
-path](/docs/getting-started/) if you have not prepared a Linux-capable host, Docker Engine, Docker Compose, and the
-Open vSwitch kernel modules yet.
+<p class="doc-lede"><code>static-lab</code> is the smallest useful success: two Hosts, two Routers, and three Links
+show how an explicit route carries traffic between two networks.</p>
+
+If you have not checked the host requirements yet, start with [Prerequisites](/docs/getting-started/prerequisites/) first.
+
+This page has one goal: start a Lab, prove that traffic crosses it, and shut it down cleanly. When that works, use
+[Create a Lab](/docs/build-labs/) to author your own example or [Features](/docs/features/) to add a specific
+capability to one.
 
 ## 1. Get the Stable source
 

@@ -13,3 +13,9 @@ dist/
 .impeccable/
 .agents/
 .codex/
+
+.github/agents/
+.github/hooks/
+.github/skills/
+
+PRODUCT.md

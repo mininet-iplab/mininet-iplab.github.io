@@ -1,6 +1,6 @@
 ---
-title: Build Labs
-description: Learn the Lab model and author Lab Examples for teaching.
+title: How to create a Lab
+description: Turn a lesson plan into a runnable Lab Example, then add the feature it needs.
 ---
 
 <div class="channel-note">
@@ -17,6 +17,26 @@ reading the rest of this guide.
 The core repository's source-backed [Creating a Lab guide](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/docs/CREATE_LAB.md)
 is the detailed reference for this release. This page explains the model, the authoring path, and the boundary
 between Instructor-owned Lab shape and Learner-controlled exercise behavior.
+
+## The authoring path
+
+Use this order for every new Lab Example:
+
+1. **Prepare the environment.** Complete [Prerequisites](/docs/getting-started/prerequisites/) and run the
+   [Quick Start](/docs/getting-started/quickstart/) once.
+2. **Define the lesson.** Write the networking objective, the observation that proves it, and the Nodes, Links,
+   addresses, and routing behavior the lesson needs.
+3. **Create the Lab Example.** Add `examples/my-lab.py` in the core repository and construct the base `mnIPLab`
+   object inside `build_network()`.
+4. **Build the shape.** Add Nodes first, then Links and interface addresses. Keep the Topology small enough that a
+   Learner can explain every Node and Link.
+5. **Add the capability.** Use the [Features](/docs/features/) cookbook to add the exact routing, Service, IPv6,
+   Container Host, or ExaBGP API your lesson needs.
+6. **Run and verify.** Test both CLI Mode and, when useful, Web UI Mode. Compare the observed route, Service response,
+   or protocol state with the Guide before publishing it.
+
+This sequence separates setup failures from Lab authoring failures and keeps the feature code attached to the object
+that owns it.
 
 ## The Lab model
 
