@@ -1,27 +1,24 @@
 ---
 import '../styles/landing.css';
 
-const pillars = [
+const paths = [
   {
-    number: '01',
-    title: 'Understand the model',
-    text: 'Start with the relationship between a Lab, its Topology, and the Nodes and Links that make it observable.',
+    title: 'Learn the Lab model',
+    text: 'Understand Labs, Topologies, Nodes, Links, and the vocabulary used throughout the project.',
     href: '/docs/understand/',
-    label: 'Explore the Lab model',
+    label: 'Understand the model',
   },
   {
-    number: '02',
-    title: 'Run a first Lab',
-    text: 'Use the documentation shell to move from host requirements to a working, low-complexity networking exercise.',
+    title: 'Teach with Labs',
+    text: 'Prepare a host, run a first Lab, and build exercises around observable routing behavior.',
     href: '/docs/getting-started/',
     label: 'Get started',
   },
   {
-    number: '03',
-    title: 'Build teaching Labs',
-    text: 'Follow the learning paths for routing, network Services, Lab Examples, and Web UI Mode as they land.',
-    href: '/docs/build-labs/',
-    label: 'Browse documentation',
+    title: 'Contribute to the project',
+    text: 'See how the core framework and the documentation site fit together, then find the right place to help.',
+    href: '/docs/contribute/',
+    label: 'Read contribution guidance',
   },
 ];
 ---
@@ -45,78 +42,107 @@ const pillars = [
         <span>Mininet-IPLab</span>
       </a>
       <nav aria-label="Primary navigation">
-        <a href="#why-iplab">Why Mininet-IPLab</a>
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
         <a href="/docs/">Documentation</a>
-        <a class="nav-action" href="https://github.com/mininet-iplab/mininet-iplab">Core repository</a>
+        <a
+          class="nav-action repo-link is-unavailable"
+          href="https://github.com/mininet-iplab/mininet-iplab"
+          aria-label="GitHub repository unavailable or private"
+          data-repo-link
+          data-repo-api="https://api.github.com/repos/mininet-iplab/mininet-iplab"
+        >
+          <svg class="repo-icon" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+          </svg>
+          <span>GitHub</span>
+          <span class="repo-stars" data-repo-stars aria-live="polite">
+            <svg class="repo-star" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="m8 0 2.47 5.01 5.53.8-4 3.9.94 5.51L8 12.6l-4.94 2.62L4 9.71 0 5.81l5.53-.8L8 0Z" />
+            </svg>
+            <span data-repo-stars-value>Unavailable</span>
+          </span>
+        </a>
       </nav>
     </header>
 
     <main>
       <section class="hero shell" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="eyebrow-dot"></span> Network emulation for IP teaching</p>
-          <h1 id="hero-title">Make routing concepts <em>observable.</em></h1>
+          <h1 id="hero-title">Teach IP routing with <em>runnable Labs.</em></h1>
           <p class="hero-lede">
-            Mininet-IPLab is a network emulation framework for teaching IP routing and core network services
-            on top of Mininet.
+            Mininet-IPLab extends Mininet with real routing daemons and network services. Run a Lab from the CLI or
+            browser, inspect what happens, and connect the behavior to the lesson.
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="/docs/">Read the documentation <span aria-hidden="true">↗</span></a>
             <a class="button button-secondary" href="/docs/getting-started/">Get started</a>
           </div>
         </div>
-        <div class="hero-diagram" aria-label="A conceptual Lab with connected routing Nodes" role="img">
-          <div class="diagram-label label-lab">LAB</div>
-          <div class="diagram-node node-a"><span>r1</span></div>
-          <div class="diagram-node node-b"><span>r2</span></div>
-          <div class="diagram-node node-c"><span>h1</span></div>
-          <div class="diagram-link link-a"></div>
-          <div class="diagram-link link-b"></div>
-          <div class="diagram-link link-c"></div>
-          <div class="diagram-caption"><strong>Topology</strong><span>Nodes · Links · State</span></div>
-        </div>
+        <figure class="hero-demo">
+          <div class="demo-frame">
+            <img
+              src="/mininet-iplab-demo.gif"
+              alt="Mininet-IPLab Web UI showing a running Lab with a topology and browser terminals"
+              width="1280"
+              height="720"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+          <figcaption>
+            <strong>Web UI Mode</strong>
+            <span>Running Lab demo</span>
+          </figcaption>
+        </figure>
       </section>
 
-      <section class="intro shell" id="why-iplab" aria-labelledby="intro-title">
-        <div class="section-kicker">A clearer path into networking</div>
-        <div class="intro-grid">
-          <h2 id="intro-title">Teach with a Lab learners can explore.</h2>
+      <section class="overview shell" id="overview" aria-labelledby="overview-title">
+        <div class="overview-grid">
+          <h2 id="overview-title">A practical way to teach how networks behave.</h2>
           <p>
-            A Lab gives a networking concept somewhere to happen. Learners can inspect routes, follow packets,
-            change Link Conditions, and connect the behavior they observe to the protocol they are studying.
+            Instructors create Lab Examples. Learners run and inspect the resulting Labs. Contributors extend the core
+            framework and the documentation around it. The site gives each audience a clear place to begin.
           </p>
         </div>
       </section>
 
-      <section class="pillars shell" aria-labelledby="pillars-title">
+      <section class="architecture shell" id="architecture" aria-labelledby="architecture-title">
         <div class="section-heading">
-          <div>
-            <div class="section-kicker">Start with an intention</div>
-            <h2 id="pillars-title">Choose your next step.</h2>
-          </div>
-          <p>The documentation site is organized around what you want to accomplish, not how the repository is arranged.</p>
+          <h2 id="architecture-title">How the system fits together.</h2>
+          <p>
+            A short architecture overview will be added here. It will explain how a Lab Example becomes a running Lab,
+            and where Mininet, routing daemons, Services, CLI Mode, and Web UI Mode fit.
+          </p>
         </div>
-        <div class="pillar-grid">
-          {pillars.map((pillar) => (
-            <a class="pillar" href={pillar.href}>
-              <span class="pillar-number">{pillar.number}</span>
-              <h3>{pillar.title}</h3>
-              <p>{pillar.text}</p>
-              <span class="pillar-link">{pillar.label} <span aria-hidden="true">→</span></span>
+        <div class="architecture-placeholder" aria-label="Architecture overview placeholder">
+          <span>Placeholder</span>
+          <p>Architecture diagram and implementation notes will be added here.</p>
+        </div>
+      </section>
+
+      <section class="paths shell" aria-labelledby="paths-title">
+        <div class="section-heading">
+          <h2 id="paths-title">Choose a starting point.</h2>
+          <p>Use the path that matches what you are trying to do.</p>
+        </div>
+        <div class="path-list">
+          {paths.map((path) => (
+            <a class="path" href={path.href}>
+              <strong>{path.title}</strong>
+              <span>{path.text}</span>
+              <span class="path-link">{path.label} <span aria-hidden="true">→</span></span>
             </a>
           ))}
         </div>
       </section>
 
-      <section class="status-band">
+      <section class="status-band" aria-labelledby="status-title">
         <div class="shell status-content">
-          <div>
-            <span class="status-label"><span class="status-dot"></span> Documentation shell</span>
-            <h2>Stable and Next, with their sources in view.</h2>
-          </div>
+          <h2 id="status-title">Stable and Next documentation.</h2>
           <p>
-            The site will distinguish Stable documentation for <code>v0.1.0</code> from selected current-development
-            material, so instructions stay traceable to the core repository.
+            Stable pages describe the <code>v0.1.0</code> core release. Next pages identify the exact core revision they
+            follow, so instructions stay traceable.
           </p>
         </div>
       </section>
@@ -128,5 +154,44 @@ const pillars = [
         <span>A documentation site for the core project.</span>
       </div>
     </footer>
+
+    <script>
+      const repositoryLink = document.querySelector('[data-repo-link]');
+      const starsValue = repositoryLink?.querySelector('[data-repo-stars-value]');
+      const apiUrl = repositoryLink?.getAttribute('data-repo-api');
+
+      const setRepositoryState = (state: 'available' | 'unavailable', value: string, label: string) => {
+        if (!repositoryLink || !starsValue) return;
+
+        repositoryLink.classList.toggle('is-available', state === 'available');
+        repositoryLink.classList.toggle('is-unavailable', state !== 'available');
+        repositoryLink.setAttribute('aria-label', label);
+        starsValue.textContent = value;
+      };
+
+      if (repositoryLink && starsValue && apiUrl) {
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 4000);
+
+        fetch(apiUrl, {
+          headers: { Accept: 'application/vnd.github+json' },
+          signal: controller.signal,
+        })
+          .then((response) => {
+            if (!response.ok) throw new Error(`GitHub responded with ${response.status}`);
+            return response.json();
+          })
+          .then((repository) => {
+            if (typeof repository.stargazers_count !== 'number') throw new Error('GitHub response was incomplete');
+
+            const stars = new Intl.NumberFormat('en-US').format(repository.stargazers_count);
+            setRepositoryState('available', stars, `GitHub repository, ${stars} stars`);
+          })
+          .catch(() => {
+            setRepositoryState('unavailable', 'Unavailable', 'GitHub repository unavailable or private');
+          })
+          .finally(() => window.clearTimeout(timeout));
+      }
+    </script>
   </body>
 </html>

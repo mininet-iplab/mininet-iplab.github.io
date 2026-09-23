@@ -1,23 +1,116 @@
-:root {
-  --sl-color-accent-low: #d8f5ee;
-  --sl-color-accent: #087f72;
-  --sl-color-accent-high: #07554f;
-  --sl-color-white: #f7fbfa;
-  --sl-color-gray-1: #e5efed;
-  --sl-color-gray-2: #b4c9c5;
-  --sl-color-gray-3: #77918d;
-  --sl-color-gray-4: #45625e;
-  --sl-color-gray-5: #263e3b;
-  --sl-color-gray-6: #172c2a;
-  --sl-color-black: #0c1b1a;
+/*
+ * Documentation palette
+ *
+ * Readable first: blue carries wayfinding and focus, while the page surfaces
+ * stay quiet enough for long explanations and code examples.
+ */
+html:root[data-theme='dark'] {
+  color-scheme: dark;
+  --sl-color-white: #f6faff;
+  --sl-color-gray-1: #e8f1f9;
+  --sl-color-gray-2: #c6d6e5;
+  --sl-color-gray-3: #9bb2c7;
+  --sl-color-gray-4: #6d8aa3;
+  --sl-color-gray-5: #355571;
+  --sl-color-gray-6: #102b45;
+  --sl-color-gray-7: #0d253c;
+  --sl-color-black: #071d32;
+
+  --sl-color-accent-low: #0f385d;
+  --sl-color-accent: #3aa2ff;
+  --sl-color-accent-high: #a5d6ff;
+  --sl-color-text: #c6d6e5;
+  --sl-color-text-accent: #75bdff;
+  --sl-color-text-invert: #071d32;
+  --sl-color-bg: #071d32;
+  --sl-color-bg-nav: #0b253d;
+  --sl-color-bg-sidebar: #0a2742;
+  --sl-color-bg-inline-code: #102f4b;
+  --sl-color-bg-accent: #a5d6ff;
+  --sl-color-hairline-light: #355571;
+  --sl-color-hairline: #23435e;
+  --sl-color-hairline-shade: #041525;
+
+  --sl-color-blue-low: #0f385d;
+  --sl-color-blue: #3aa2ff;
+  --sl-color-blue-high: #a5d6ff;
+  --sl-color-green-low: #123c32;
+  --sl-color-green: #58c7a3;
+  --sl-color-green-high: #a9ecd7;
+  --sl-color-orange-low: #49331a;
+  --sl-color-orange: #f1ae55;
+  --sl-color-orange-high: #ffe0a9;
+  --sl-color-purple-low: #352553;
+  --sl-color-purple: #b493f2;
+  --sl-color-purple-high: #e4d5ff;
+  --sl-color-red-low: #4c2025;
+  --sl-color-red: #f47d87;
+  --sl-color-red-high: #ffc5ca;
+}
+
+html:root[data-theme='light'] {
+  color-scheme: light;
+  --sl-color-white: #10243a;
+  --sl-color-gray-1: #1d344b;
+  --sl-color-gray-2: #344d64;
+  --sl-color-gray-3: #587187;
+  --sl-color-gray-4: #7f98ad;
+  --sl-color-gray-5: #b6c9da;
+  --sl-color-gray-6: #e4eef7;
+  --sl-color-gray-7: #f4f8fc;
+  --sl-color-black: #ffffff;
+
+  --sl-color-accent-low: #e1f0ff;
+  --sl-color-accent: #0066cc;
+  --sl-color-accent-high: #004b95;
+  --sl-color-text: #344d64;
+  --sl-color-text-accent: #0059a9;
+  --sl-color-text-invert: #ffffff;
+  --sl-color-bg: #ffffff;
+  --sl-color-bg-nav: #f4f8fc;
+  --sl-color-bg-sidebar: #edf5fc;
+  --sl-color-bg-inline-code: #e8f1f8;
+  --sl-color-bg-accent: #0066cc;
+  --sl-color-hairline-light: #c8d8e6;
+  --sl-color-hairline: #d9e5ef;
+  --sl-color-hairline-shade: #eaf2f8;
+
+  --sl-color-blue-low: #e1f0ff;
+  --sl-color-blue: #0066cc;
+  --sl-color-blue-high: #004b95;
+  --sl-color-green-low: #e3f7f0;
+  --sl-color-green: #087f61;
+  --sl-color-green-high: #075b46;
+  --sl-color-orange-low: #fff1dc;
+  --sl-color-orange: #a65300;
+  --sl-color-orange-high: #7a3b00;
+  --sl-color-purple-low: #f0eaff;
+  --sl-color-purple: #7040b2;
+  --sl-color-purple-high: #51268b;
+  --sl-color-red-low: #ffebed;
+  --sl-color-red: #bd2638;
+  --sl-color-red-high: #8d1d2b;
 }
 
 :focus-visible {
-  outline: 3px solid #f4b942;
+  outline: 3px solid var(--sl-color-accent);
   outline-offset: 3px;
 }
 
-.sl-markdown-content a:not(:where(.not-content *)) {
-  text-decoration-thickness: 0.12em;
-  text-underline-offset: 0.18em;
+::selection {
+  color: var(--sl-color-text-invert);
+  background: var(--sl-color-accent-high);
+}
+
+/* Custom content callouts use the same semantic roles as the Starlight theme. */
+.channel-note {
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--sl-color-hairline-light);
+  border-radius: 0.5rem;
+  background: var(--sl-color-accent-low);
+  color: var(--sl-color-text);
+}
+
+.channel-note strong {
+  color: var(--sl-color-white);
 }
