@@ -3,14 +3,14 @@ import '../styles/landing.css';
 
 const paths = [
   {
-    title: 'Learn the Lab model',
+    title: 'Understand the Lab model',
     text: 'Understand Labs, Topologies, Nodes, Links, and the vocabulary used throughout the project.',
     href: '/docs/understand/',
-    label: 'Understand the model',
+    label: 'Understand Mininet-IPLab',
   },
   {
-    title: 'Teach with Labs',
-    text: 'Prepare a host, run a first Lab, and build exercises around observable routing behavior.',
+    title: 'Install and run a first Lab',
+    text: 'Prepare a Linux-capable host, install the Stable release, and run the canonical static-routing Lab Example.',
     href: '/docs/getting-started/',
     label: 'Get started',
   },
@@ -71,11 +71,11 @@ const paths = [
         <div class="hero-copy">
           <h1 id="hero-title">Teach IP routing with <em>runnable Labs.</em></h1>
           <p class="hero-lede">
-            Mininet-IPLab extends Mininet with real routing daemons and network services. Run a Lab from the CLI or
-            browser, inspect what happens, and connect the behavior to the lesson.
+            Mininet-IPLab is a network emulation framework for teaching IP routing and core network services on top of
+            Mininet. Run a Lab from the CLI or browser, inspect what happens, and connect the behavior to the lesson.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="/docs/">Read the documentation <span aria-hidden="true">↗</span></a>
+            <a class="button button-primary" href="/docs/understand/">Understand the model <span aria-hidden="true">↗</span></a>
             <a class="button button-secondary" href="/docs/getting-started/">Get started</a>
           </div>
         </div>
@@ -109,15 +109,33 @@ const paths = [
 
       <section class="architecture shell" id="architecture" aria-labelledby="architecture-title">
         <div class="section-heading">
-          <h2 id="architecture-title">How the system fits together.</h2>
+          <h2 id="architecture-title">One model from recipe to running Lab.</h2>
           <p>
-            A short architecture overview will be added here. It will explain how a Lab Example becomes a running Lab,
-            and where Mininet, routing daemons, Services, CLI Mode, and Web UI Mode fit.
+            Start with a Lab Example, a Python recipe that builds one Lab. The running Lab has a Topology made from
+            Nodes and Links, so a lesson can connect a routing concept to observable behavior.
           </p>
         </div>
-        <div class="architecture-placeholder" aria-label="Architecture overview placeholder">
-          <span>Placeholder</span>
-          <p>Architecture diagram and implementation notes will be added here.</p>
+        <div class="model-grid" aria-label="Mininet-IPLab Lab model">
+          <article class="model-step">
+            <span class="model-step-number" aria-hidden="true">01</span>
+            <h3>Lab Example</h3>
+            <p>A Python recipe that creates a concrete teaching Lab.</p>
+          </article>
+          <article class="model-step">
+            <span class="model-step-number" aria-hidden="true">02</span>
+            <h3>Lab</h3>
+            <p>One emulated network running now, with its current routing state.</p>
+          </article>
+          <article class="model-step">
+            <span class="model-step-number" aria-hidden="true">03</span>
+            <h3>Topology</h3>
+            <p>The Lab’s shape: its Nodes and the Links that connect them.</p>
+          </article>
+          <article class="model-step">
+            <span class="model-step-number" aria-hidden="true">04</span>
+            <h3>Observe</h3>
+            <p>Use CLI Mode or Web UI Mode to inspect what the Lab is doing.</p>
+          </article>
         </div>
       </section>
 

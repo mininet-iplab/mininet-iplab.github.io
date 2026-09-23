@@ -311,31 +311,40 @@ h2 {
   align-items: start;
 }
 
-.architecture-placeholder {
+.model-grid {
   display: grid;
-  align-content: center;
-  min-height: 190px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 46px;
-  padding: 32px;
-  border: 1px dashed var(--brand);
-  border-radius: 12px;
-  background: var(--panel);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-.architecture-placeholder > span {
-  margin-bottom: 8px;
-  color: var(--brand-dark);
+.model-step {
+  min-height: 210px;
+  padding: 28px 24px 30px;
+}
+
+.model-step + .model-step {
+  border-left: 1px solid var(--line);
+}
+
+.model-step-number {
+  display: block;
+  margin-bottom: 34px;
+  color: var(--brand);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
-.architecture-placeholder p {
-  max-width: 560px;
-  margin: 0;
+.model-step h3 {
+  margin-bottom: 12px;
+  font-size: 1.28rem;
+}
+
+.model-step p {
+  margin-bottom: 0;
   color: var(--muted);
-  font-size: 1.02rem;
   line-height: 1.6;
 }
 
@@ -538,9 +547,18 @@ code {
     padding-bottom: 78px;
   }
 
-  .architecture-placeholder {
+  .model-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-top: 32px;
-    padding: 24px;
+  }
+
+  .model-step:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .model-step:nth-child(4) {
+    border-top: 1px solid var(--line);
   }
 
   .path {
@@ -551,5 +569,11 @@ code {
   .footer-content {
     display: grid;
     gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }

@@ -3,6 +3,30 @@ title: Understand Mininet-IPLab
 description: The concepts behind a Mininet-IPLab Lab.
 ---
 
-This section introduces the domain model used throughout the documentation: a running **Lab** has a **Topology** made of **Nodes** and **Links**. A Lab Example is the recipe that creates one Lab, while a Guide explains what a Learner should observe.
+<div class="channel-note">
 
-The full model and learning paths will be added in the next documentation milestones.
+**Stable · core v0.1.0.** This page describes the Lab model in the Stable release.
+
+</div>
+
+Mininet-IPLab is a network emulation framework for teaching IP routing and core network services on top of Mininet.
+
+## From a recipe to a running Lab
+
+A **Lab Example** is a Python recipe that creates one **Lab**. A Lab is one emulated network running now: its Nodes,
+Links, and routing state. The recipe is repeatable; the Lab is the running result that a Learner can inspect.
+
+The Lab model has three connected ideas:
+
+- A **Topology** is the shape of a Lab: which **Nodes** exist and which **Links** join them. It describes the Lab,
+  but it is not the Lab itself.
+- A **Node** is a participant in a Lab, such as a Host or Router. A Node can offer a **Service**, while a **Speaker**
+  is a Node that announces and withdraws routes when the Lab Example includes that capability.
+- A **Link** connects two Nodes and carries the traffic whose behavior the Learner is studying. Link Conditions can
+  later make that connection lossy, delayed, or bandwidth-limited.
+
+This separation keeps the lesson concrete: an Instructor chooses the Lab Example and its Topology, then a Learner
+observes how Nodes communicate across Links in the running Lab.
+
+CLI Mode and Web UI Mode provide two ways to observe the same Lab. The first-success path starts with the
+[`static-lab` Lab Example](/docs/getting-started/), a small static-routing exercise.

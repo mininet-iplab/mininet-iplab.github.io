@@ -15,7 +15,7 @@ The remaining sections provide paths to Lab Examples, Web UI Mode, lookup-orient
 
 <div class="channel-note">
 
-**Documentation shell:** Stable content will identify the `v0.1.0` core release; selected Next content will identify its exact core commit.
+**Stable · core v0.1.0.** This documentation channel describes the supported `v0.1.0` core release.
 
 </div>
 
