@@ -1,0 +1,132 @@
+---
+import '../styles/landing.css';
+
+const pillars = [
+  {
+    number: '01',
+    title: 'Understand the model',
+    text: 'Start with the relationship between a Lab, its Topology, and the Nodes and Links that make it observable.',
+    href: '/docs/understand/',
+    label: 'Explore the Lab model',
+  },
+  {
+    number: '02',
+    title: 'Run a first Lab',
+    text: 'Use the documentation shell to move from host requirements to a working, low-complexity networking exercise.',
+    href: '/docs/getting-started/',
+    label: 'Get started',
+  },
+  {
+    number: '03',
+    title: 'Build teaching Labs',
+    text: 'Follow the learning paths for routing, network Services, Lab Examples, and Web UI Mode as they land.',
+    href: '/docs/build-labs/',
+    label: 'Browse documentation',
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Mininet-IPLab is a network emulation framework for teaching IP routing and core network services on top of Mininet."
+    />
+    <link rel="icon" href="/favicon.svg" />
+    <title>Mininet-IPLab · Network emulation for IP teaching</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Mininet-IPLab home">
+        <img src="/mininet-iplab-mark.svg" alt="" width="36" height="36" />
+        <span>Mininet-IPLab</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#why-iplab">Why Mininet-IPLab</a>
+        <a href="/docs/">Documentation</a>
+        <a class="nav-action" href="https://github.com/mininet-iplab/mininet-iplab">Core repository</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero shell" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> Network emulation for IP teaching</p>
+          <h1 id="hero-title">Make routing concepts <em>observable.</em></h1>
+          <p class="hero-lede">
+            Mininet-IPLab is a network emulation framework for teaching IP routing and core network services
+            on top of Mininet.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="/docs/">Read the documentation <span aria-hidden="true">↗</span></a>
+            <a class="button button-secondary" href="/docs/getting-started/">Get started</a>
+          </div>
+        </div>
+        <div class="hero-diagram" aria-label="A conceptual Lab with connected routing Nodes" role="img">
+          <div class="diagram-label label-lab">LAB</div>
+          <div class="diagram-node node-a"><span>r1</span></div>
+          <div class="diagram-node node-b"><span>r2</span></div>
+          <div class="diagram-node node-c"><span>h1</span></div>
+          <div class="diagram-link link-a"></div>
+          <div class="diagram-link link-b"></div>
+          <div class="diagram-link link-c"></div>
+          <div class="diagram-caption"><strong>Topology</strong><span>Nodes · Links · State</span></div>
+        </div>
+      </section>
+
+      <section class="intro shell" id="why-iplab" aria-labelledby="intro-title">
+        <div class="section-kicker">A clearer path into networking</div>
+        <div class="intro-grid">
+          <h2 id="intro-title">Teach with a Lab learners can explore.</h2>
+          <p>
+            A Lab gives a networking concept somewhere to happen. Learners can inspect routes, follow packets,
+            change Link Conditions, and connect the behavior they observe to the protocol they are studying.
+          </p>
+        </div>
+      </section>
+
+      <section class="pillars shell" aria-labelledby="pillars-title">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Start with an intention</div>
+            <h2 id="pillars-title">Choose your next step.</h2>
+          </div>
+          <p>The documentation site is organized around what you want to accomplish, not how the repository is arranged.</p>
+        </div>
+        <div class="pillar-grid">
+          {pillars.map((pillar) => (
+            <a class="pillar" href={pillar.href}>
+              <span class="pillar-number">{pillar.number}</span>
+              <h3>{pillar.title}</h3>
+              <p>{pillar.text}</p>
+              <span class="pillar-link">{pillar.label} <span aria-hidden="true">→</span></span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="status-band">
+        <div class="shell status-content">
+          <div>
+            <span class="status-label"><span class="status-dot"></span> Documentation shell</span>
+            <h2>Stable and Next, with their sources in view.</h2>
+          </div>
+          <p>
+            The site will distinguish Stable documentation for <code>v0.1.0</code> from selected current-development
+            material, so instructions stay traceable to the core repository.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-content">
+        <span>Mininet-IPLab</span>
+        <span>A documentation site for the core project.</span>
+      </div>
+    </footer>
+  </body>
+</html>

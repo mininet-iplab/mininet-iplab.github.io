@@ -1,0 +1,23 @@
+:root {
+  --sl-color-accent-low: #d8f5ee;
+  --sl-color-accent: #087f72;
+  --sl-color-accent-high: #07554f;
+  --sl-color-white: #f7fbfa;
+  --sl-color-gray-1: #e5efed;
+  --sl-color-gray-2: #b4c9c5;
+  --sl-color-gray-3: #77918d;
+  --sl-color-gray-4: #45625e;
+  --sl-color-gray-5: #263e3b;
+  --sl-color-gray-6: #172c2a;
+  --sl-color-black: #0c1b1a;
+}
+
+:focus-visible {
+  outline: 3px solid #f4b942;
+  outline-offset: 3px;
+}
+
+.sl-markdown-content a:not(:where(.not-content *)) {
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.18em;
+}
