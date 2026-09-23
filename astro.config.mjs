@@ -31,7 +31,10 @@ export default defineConfig({
         },
         {
           label: 'Get Started',
-          items: [{ label: 'Overview', slug: 'docs/getting-started' }],
+          items: [
+            { label: 'Overview', slug: 'docs/getting-started' },
+            { label: 'First Lab quickstart', slug: 'docs/getting-started/quickstart' },
+          ],
         },
         {
           label: 'Build Labs',

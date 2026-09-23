@@ -44,6 +44,7 @@ test('the landing page presents the project and the two visitor paths', () => {
   assert.match(landingHtml, /alt="Mininet-IPLab Web UI showing a running Lab with a topology and browser terminals"/);
   assert.match(landingHtml, /href="\/docs\/understand\/"/);
   assert.match(landingHtml, /href="\/docs\/getting-started\/"/);
+  assert.match(landingHtml, /href="\/docs\/getting-started\/quickstart\/"/);
 });
 
 test('the Understand page explains the stable Lab model', () => {
@@ -73,6 +74,27 @@ test('the Get Started page gives the stable installation path and platform cavea
   assert.match(gettingStartedText, /localhost:8050/);
 });
 
+test('the First Lab quickstart guides static-lab observations and recovery', () => {
+  const quickstartHtml = readBuiltPage('docs/getting-started/quickstart');
+  const quickstartText = visibleText(quickstartHtml);
+
+  assert.match(quickstartText, /Stable.*core.*v0\.1\.0/);
+  assert.match(quickstartText, /static-lab/);
+  assert.match(quickstartText, /docker compose build/);
+  assert.match(quickstartText, /docker compose up -d/);
+  assert.match(quickstartText, /docker compose exec mniplab python3 examples\/static-lab\.py --enable-web/);
+  assert.match(quickstartText, /192\.168\.1\.2/);
+  assert.match(quickstartText, /192\.168\.2\.2/);
+  assert.match(quickstartText, /10\.10\.1\.1/);
+  assert.match(quickstartText, /static route/i);
+  assert.match(quickstartText, /Open vSwitch/i);
+  assert.match(quickstartText, /docker compose.*cleanup|python -m mniplab cleanup/i);
+  assert.match(
+    quickstartHtml,
+    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/v0\.1\.0\/examples\/static-lab\.py"/,
+  );
+});
+
 test('each published documentation page identifies the Stable release', () => {
   const stablePages = ['docs', 'docs/understand', 'docs/getting-started', 'docs/web-ui', 'docs/contribute'];
 
@@ -95,6 +117,7 @@ test('the documentation shell exposes each intent-first navigation destination',
   const destinations = [
     'understand',
     'getting-started',
+    'getting-started/quickstart',
     'build-labs',
     'lab-examples',
     'web-ui',

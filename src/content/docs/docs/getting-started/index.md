@@ -12,6 +12,8 @@ description: Prepare a host and find the first Mininet-IPLab workflow.
 Mininet-IPLab runs in a container. The supported first-success path uses Docker Compose on a Linux-capable host and
 then runs `static-lab`, the canonical first Lab Example.
 
+Continue to the [First Lab quickstart](/docs/getting-started/quickstart/) for the complete run-and-observe Guide.
+
 ## Before you install
 
 Check these requirements before building the image:
