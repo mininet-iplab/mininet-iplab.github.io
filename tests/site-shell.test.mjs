@@ -53,9 +53,13 @@ test('the Understand page explains the stable Lab model', () => {
 
   assert.match(understandText, /Stable.*core.*v0\.1\.0/);
   assert.match(understandText, /Lab Example/);
+  assert.match(understandText, /Guide/);
+  assert.match(understandText, /Layout/);
+  assert.match(understandText, /Exercise Configuration/);
   assert.match(understandText, /Lab.*Topology/);
   assert.match(understandText, /Topology.*Nodes.*Links/);
   assert.match(understandText, /Link.*connects/);
+  assert.match(understandHtml, /href="\/docs\/build-labs\/"/);
 });
 
 test('the Get Started page gives the stable installation path and platform caveat', () => {
@@ -92,6 +96,47 @@ test('the First Lab quickstart guides static-lab observations and recovery', () 
   assert.match(
     quickstartHtml,
     /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/v0\.1\.0\/examples\/static-lab\.py"/,
+  );
+});
+
+test('the Build Labs guide explains the model and authoring seam', () => {
+  const buildLabsHtml = readBuiltPage('docs/build-labs');
+  const buildLabsText = visibleText(buildLabsHtml);
+
+  assert.match(buildLabsText, /Development/);
+  for (const term of ['Lab', 'Lab Example', 'Guide', 'Topology', 'Node', 'Link', 'Layout']) {
+    assert.match(buildLabsText, new RegExp(term), `${term} is missing from the authoring guide`);
+  }
+  assert.match(buildLabsText, /Lab shape/);
+  assert.match(buildLabsText, /Learner.*Exercise Configuration/);
+  assert.match(buildLabsText, /CLI Mode/);
+  assert.match(buildLabsText, /Web UI Mode/);
+  assert.match(buildLabsText, /addRouter/);
+  assert.match(buildLabsText, /addHost/);
+  assert.match(buildLabsText, /addLink/);
+  assert.match(buildLabsText, /add_frr_config/);
+  assert.match(buildLabsText, /addService/);
+  assert.match(buildLabsText, /DHCPService/);
+  assert.match(buildLabsText, /Lab Example is the repeatable Python recipe.*Lab is the one emulated network running now/);
+  assert.match(buildLabsText, /Topology.*shape of a Lab/);
+  assert.match(buildLabsText, /Service is also not a kind of Node/);
+  assert.match(buildLabsText, /does not add or remove Nodes.*rewire Links/);
+  assert.match(buildLabsText, /Layout.*does not add Nodes/);
+  assert.match(buildLabsText, /examples\/.*lab-name.*layout\.json/);
+  assert.match(buildLabsText, /examples\/layouts\/.*lab-id.*json/);
+  assert.match(buildLabsText, /examples\/guides\/.*lab-id.*md/);
+  assert.match(buildLabsText, /Service/);
+  assert.match(
+    buildLabsHtml,
+    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/v0\.1\.0\/docs\/CREATE_LAB\.md"/,
+  );
+  assert.match(
+    buildLabsHtml,
+    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a\/docs\/CREATE_LAB\.md#services"/,
+  );
+  assert.match(
+    buildLabsHtml,
+    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a\/examples\/dhcp-lab\.py"/,
   );
 });
 

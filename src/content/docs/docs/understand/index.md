@@ -14,7 +14,9 @@ Mininet-IPLab is a network emulation framework for teaching IP routing and core 
 ## From a recipe to a running Lab
 
 A **Lab Example** is a Python recipe that creates one **Lab**. A Lab is one emulated network running now: its Nodes,
-Links, and routing state. The recipe is repeatable; the Lab is the running result that a Learner can inspect.
+Links, and routing state. The recipe is repeatable; the Lab is the running result that a Learner can inspect. A
+learner-facing **Guide** explains what to try and observe, while an optional **Layout** only controls where the
+Topology is drawn in Web UI Mode.
 
 The Lab model has three connected ideas:
 
@@ -28,5 +30,11 @@ The Lab model has three connected ideas:
 This separation keeps the lesson concrete: an Instructor chooses the Lab Example and its Topology, then a Learner
 observes how Nodes communicate across Links in the running Lab.
 
+The Lab Example owns the Lab shape: its Nodes, Links, addresses, routing behavior, and Services. **Exercise
+Configuration** is the set of lesson values an Instructor exposes for a Learner to change. It can alter an exercise's
+inputs or a Link Condition, but it does not normally add Nodes, rewire Links, or change the Lab lifecycle.
+
 CLI Mode and Web UI Mode provide two ways to observe the same Lab. The first-success path starts with the
 [`static-lab` Lab Example](/docs/getting-started/), a small static-routing exercise.
+
+Instructors who need to create a new Lab Example should continue with the [Build Labs authoring guide](/docs/build-labs/).
