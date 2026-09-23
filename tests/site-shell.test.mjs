@@ -140,6 +140,66 @@ test('the Build Labs guide explains the model and authoring seam', () => {
   );
 });
 
+test('the routing learning path exposes stable concepts and tasks', () => {
+  const learningPathHtml = readBuiltPage('docs/understand/routing-and-link-conditions');
+  const learningPathText = visibleText(learningPathHtml);
+
+  assert.match(learningPathText, /Stable.*core.*v0\.1\.0/);
+  for (const topic of ['Static routing', 'OSPF', 'BGP', 'IPv4', 'IPv6', 'Link Conditions']) {
+    assert.match(learningPathText, new RegExp(topic), `${topic} is missing from the routing learning path`);
+  }
+  assert.match(learningPathText, /Experimental.*ExaBGP Speaker/);
+  for (const destination of [
+    'static-routing',
+    'ospf',
+    'bgp',
+    'ip-addressing',
+    'link-conditions',
+  ]) {
+    assert.match(learningPathHtml, new RegExp(`/docs/understand/routing-and-link-conditions/${destination}/`));
+  }
+});
+
+test('the routing concept pages pair observations with exact Stable source links', () => {
+  const pages = {
+    'static-routing': ['static-lab.py', 'static route', '192.168.2.0/24'],
+    ospf: ['ospf-lab.py', 'show ip ospf neighbor', 'OSPF neighbor'],
+    bgp: ['bgp-lab.py', 'show bgp summary', 'autonomous system'],
+    'ip-addressing': ['static-lab-ipv6.py', 'ip6', 'defaultRoute6'],
+  };
+
+  for (const [page, terms] of Object.entries(pages)) {
+    const html = readBuiltPage(`docs/understand/routing-and-link-conditions/${page}`);
+    const pageText = visibleText(html);
+
+    assert.match(pageText, /Stable.*core.*v0\.1\.0/, `${page} does not identify Stable v0.1.0`);
+    for (const term of terms) {
+      assert.match(pageText, new RegExp(term, 'i'), `${term} is missing from ${page}`);
+    }
+    assert.match(
+      html,
+      /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/(?:blob|tree)\/v0\.1\.0\//,
+      `${page} does not link to the pinned Stable source`,
+    );
+  }
+});
+
+test('the Link Conditions page keeps connectivity controls separate from routing state', () => {
+  const linkConditionsHtml = readBuiltPage('docs/understand/routing-and-link-conditions/link-conditions');
+  const linkConditionsText = visibleText(linkConditionsHtml);
+
+  assert.match(linkConditionsText, /Stable.*core.*v0\.1\.0/);
+  assert.match(linkConditionsText, /Learner/);
+  for (const term of ['disconnect', 'reconnect', 'delay', 'loss', 'bandwidth', 'routing protocol']) {
+    assert.match(linkConditionsText, new RegExp(term, 'i'), `${term} is missing from Link Conditions guidance`);
+  }
+  assert.match(linkConditionsText, /does not change.*route|not.*routing protocol/i);
+  assert.match(
+    linkConditionsHtml,
+    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/v0\.1\.0\/docs\/web-ui\.md"/,
+  );
+});
+
 test('each published documentation page identifies the Stable release', () => {
   const stablePages = ['docs', 'docs/understand', 'docs/getting-started', 'docs/web-ui', 'docs/contribute'];
 
@@ -163,6 +223,12 @@ test('the documentation shell exposes each intent-first navigation destination',
     'understand',
     'getting-started',
     'getting-started/quickstart',
+    'understand/routing-and-link-conditions',
+    'understand/routing-and-link-conditions/static-routing',
+    'understand/routing-and-link-conditions/ospf',
+    'understand/routing-and-link-conditions/bgp',
+    'understand/routing-and-link-conditions/ip-addressing',
+    'understand/routing-and-link-conditions/link-conditions',
     'build-labs',
     'lab-examples',
     'web-ui',

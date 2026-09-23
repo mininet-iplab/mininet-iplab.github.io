@@ -27,7 +27,29 @@ export default defineConfig({
       sidebar: [
         {
           label: 'Understand',
-          items: [{ label: 'Overview', slug: 'docs/understand' }],
+          items: [
+            { label: 'Overview', slug: 'docs/understand' },
+            {
+              label: 'Routing and Link Conditions',
+              items: [
+                { label: 'Learning path', slug: 'docs/understand/routing-and-link-conditions' },
+                {
+                  label: 'Static routing',
+                  slug: 'docs/understand/routing-and-link-conditions/static-routing',
+                },
+                { label: 'OSPF', slug: 'docs/understand/routing-and-link-conditions/ospf' },
+                { label: 'BGP', slug: 'docs/understand/routing-and-link-conditions/bgp' },
+                {
+                  label: 'IPv4 and IPv6',
+                  slug: 'docs/understand/routing-and-link-conditions/ip-addressing',
+                },
+                {
+                  label: 'Link Conditions',
+                  slug: 'docs/understand/routing-and-link-conditions/link-conditions',
+                },
+              ],
+            },
+          ],
         },
         {
           label: 'Get Started',

@@ -37,4 +37,7 @@ inputs or a Link Condition, but it does not normally add Nodes, rewire Links, or
 CLI Mode and Web UI Mode provide two ways to observe the same Lab. The first-success path starts with the
 [`static-lab` Lab Example](/docs/getting-started/), a small static-routing exercise.
 
+Once that first Lab is working, follow the [Routing and Link Conditions learning path](/docs/understand/routing-and-link-conditions/)
+to compare static routing, OSPF, BGP, IPv4, IPv6, and Learner-controlled Link Conditions.
+
 Instructors who need to create a new Lab Example should continue with the [Build Labs authoring guide](/docs/build-labs/).
