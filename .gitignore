@@ -13,6 +13,7 @@ dist/
 .impeccable/
 .agents/
 .codex/
+/skills-lock.json
 
 .github/agents/
 .github/hooks/
