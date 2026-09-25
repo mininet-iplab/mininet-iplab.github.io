@@ -1,5 +1,6 @@
 ---
 import '../styles/landing.css';
+import architectureImage from '../assets/Mininet-Iplab-Architecture.svg';
 
 const paths = [
   {
@@ -129,14 +130,24 @@ const paths = [
         <div class="section-heading">
           <h2 id="architecture-title">How the system fits together.</h2>
           <p>
-            A short architecture overview will be added here. It will explain how a Lab Example becomes a running Lab,
-            and where Mininet, routing daemons, Services, CLI Mode, and Web UI Mode fit.
+            Mininet-IPLab extends Mininet with Open vSwitch, routing software, and network Services on a single Linux
+            host. Instructors and Learners interact with a Lab through CLI Mode or the optional Web UI Mode.
           </p>
         </div>
-        <div class="architecture-placeholder" aria-label="Architecture overview placeholder">
-          <span>Placeholder</span>
-          <p>Architecture diagram and implementation notes will be added here.</p>
-        </div>
+        <figure class="architecture-figure">
+          <img
+            src={architectureImage.src}
+            alt="Four-layer Mininet-IPLab architecture: Python Labs, CLI and Web UI connect to running Labs with routers, switches, hosts and network Services on a Linux host."
+            width="1200"
+            height="840"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            A Lab runs on one Linux host, combining Mininet with the routing and network-service software that makes
+            network behavior observable.
+          </figcaption>
+        </figure>
       </section>
 
       <section class="paths shell" aria-labelledby="paths-title">

@@ -300,8 +300,8 @@ h2 {
 }
 
 .architecture {
-  padding-top: 82px;
-  padding-bottom: 104px;
+  padding-top: 96px;
+  padding-bottom: 120px;
 }
 
 .section-heading {
@@ -311,31 +311,27 @@ h2 {
   align-items: start;
 }
 
-.architecture-placeholder {
-  display: grid;
-  align-content: center;
-  min-height: 190px;
-  margin-top: 46px;
-  padding: 32px;
-  border: 1px dashed var(--brand);
+.architecture-figure {
+  width: min(100%, 1060px);
+  margin: 58px auto 0;
   border-radius: 12px;
-  background: var(--panel);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #fff;
 }
 
-.architecture-placeholder > span {
-  margin-bottom: 8px;
-  color: var(--brand-dark);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.architecture-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-.architecture-placeholder p {
-  max-width: 560px;
+.architecture-figure figcaption {
   margin: 0;
+  padding: 14px 20px;
+  border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 1.02rem;
+  font-size: 0.92rem;
   line-height: 1.6;
 }
 
@@ -538,9 +534,14 @@ code {
     padding-bottom: 78px;
   }
 
-  .architecture-placeholder {
-    margin-top: 32px;
-    padding: 24px;
+  .architecture {
+    padding-top: 84px;
+    padding-bottom: 94px;
+  }
+
+  .architecture-figure {
+    width: 100%;
+    margin-top: 40px;
   }
 
   .path {
