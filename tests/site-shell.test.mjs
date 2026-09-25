@@ -172,9 +172,14 @@ test('the Features guide and recipes explain how to attach capabilities to a Lab
     'dnssec',
     'exabgp',
     'ipv6',
+    'vlans',
+    'nat',
     'ospf',
+    'packet-capture',
+    'multi-lab',
     'static-routing',
   ];
+  const updatedPages = new Set(['vlans', 'nat', 'packet-capture', 'multi-lab']);
   const featuresHtml = readBuiltPage('docs/features');
   const featuresText = visibleText(featuresHtml);
 
@@ -189,9 +194,12 @@ test('the Features guide and recipes explain how to attach capabilities to a Lab
     assert.match(pageText, /Development|Experimental/, `${page} maturity is missing`);
     assert.match(pageText, /Add it to a Lab/, `${page} has no authoring section`);
     assert.match(pageText, /Verify it/, `${page} has no verification section`);
+    const sourceRevision = updatedPages.has(page)
+      ? '9c14a8fee2ac40ac430909e4c4390d39662f3c6c'
+      : 'a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a';
     assert.match(
       html,
-      /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a\//,
+      new RegExp(`href="https://github\\.com/mininet-iplab/mininet-iplab/blob/${sourceRevision}/`),
       `${page} does not link to the pinned source revision`,
     );
   }
@@ -226,11 +234,15 @@ test('the documentation shell exposes each intent-first navigation destination',
     'features/ospf',
     'features/bgp',
     'features/ipv6',
+    'features/vlans',
+    'features/nat',
     'features/dhcp',
     'features/dns',
     'features/dnssec',
     'features/container-hosts',
     'features/exabgp',
+    'features/packet-capture',
+    'features/multi-lab',
     'build-labs',
     'reference',
     'contribute',
