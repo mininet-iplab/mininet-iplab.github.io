@@ -3,13 +3,6 @@ title: DNSSEC
 description: Add signed Zones and a validating Resolver to a Lab.
 ---
 
-<div class="channel-note">
-
-**Development · core revision `a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a`.** DNSSEC is an extension of the DNS Service;
-use the current source-linked example for the full hierarchy.
-
-</div>
-
 DNSSEC has two sides: a Primary Zone signs records, and a Resolver validates the chain using a Trust Anchor. A signed
 Zone by itself does not prove that a client is validating responses.
 
@@ -55,6 +48,18 @@ dig +dnssec web.example.com @10.0.5.2
 delv web.example.com @10.0.5.2
 ```
 
-The source-backed [`dnssec-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/examples/dnssec-lab.py)
+A validated answer carries the `ad` (authenticated data) flag and an `RRSIG` beside the `A` record:
+
+![dnssec-lab: dig +dnssec from client1 returns flags with ad and an RRSIG](../../../../assets/screenshots/dnssec-terminal.png)
+
+Select the `DNS` badge on `auth1` to see the signed Zone. The panel marks it **Signed**, can reveal the `RRSIG` and
+`NSEC` Records the editor otherwise hides, and its **DNSSEC Details** section lists the active keys and the `DS`
+records the parent Zone must publish, each with a **Copy DS** button. Run `dnssec_rollover auth1 example.com. zsk` at
+the Lab Prompt to roll the Zone Signing Key while clients keep validating. On the Resolver, the
+[Cache Inspector](/docs/features/dns-resolver/) shows each cached answer as `SECURE`, `BOGUS`, or `INSECURE`.
+
+![The DNSSEC Details section of auth1's DNS panel](../../../../assets/screenshots/dnssec-panel.png)
+
+The source-backed [`dnssec-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/examples/dnssec-lab.py)
 contains the full Root → TLD → Authoritative → Resolver topology. The broader DNS Service reference is in
-[`DNS.md`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/docs/DNS.md).
+[`DNS.md`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/docs/DNS.md).

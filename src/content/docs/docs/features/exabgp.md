@@ -3,13 +3,6 @@ title: ExaBGP
 description: Add an experimental route-announcing Speaker to a Lab.
 ---
 
-<div class="channel-note">
-
-**Experimental · core revision `a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a`.** ExaBGP Speakers are usable but are not a
-Stable compatibility promise. Keep this label when you publish a Lab that depends on them.
-
-</div>
-
 An ExaBGP Speaker is a Node that announces and withdraws routes to an FRR Router. It is not a replacement for the
 Router and it is not a normal Host-only routing protocol setting.
 
@@ -51,5 +44,11 @@ r1 vtysh -c 'show bgp summary'
 r1 vtysh -c 'show bgp ipv6 unicast'
 ```
 
-The complete IPv6 example is [`exabgp-ipv6-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/examples/exabgp-ipv6-lab.py).
-For runtime announcements, FIFO control, and route validation, read the core [`EXABGP.md`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/docs/EXABGP.md).
+In Web UI Mode, right-click the Speaker and choose **Open Speaker**. The panel lists each Neighbor with its session
+state and the routes sent and received, and it can announce a route with AS-PATH, communities, and MED, generate a
+burst of random routes, or withdraw them. At the Lab Prompt use `show_speaker`, `announce`, and `withdraw`.
+
+![The Speaker panel for isp1 in exabgp-lab: Announce a route and Generate routes](../../../../assets/screenshots/exabgp-speaker.png)
+
+The complete IPv6 example is [`exabgp-ipv6-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/examples/exabgp-ipv6-lab.py).
+For runtime announcements, FIFO control, and route validation, read the core [`EXABGP.md`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/docs/EXABGP.md).

@@ -3,13 +3,6 @@ title: Classroom deployment
 description: Run the standalone mnIPLab server, configure classroom accounts, and let an Instructor manage Labs.
 ---
 
-<div class="channel-note">
-
-**Development · core revision `a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a`.** The standalone `mniplab serve` command and
-multi-user classroom workflow are current-development features, not part of the Stable `v0.1.0` channel.
-
-</div>
-
 <p class="doc-lede">Use classroom deployment when an Instructor starts one Lab in a browser and multiple Learners join
 that same running Lab.</p>
 
@@ -122,6 +115,8 @@ Linux host's LAN address or classroom DNS name; do not ask Learners to use their
 4. Share the same server address with the class.
 5. Use **Stop Lab** when the exercise is finished.
 
+![The Instructor's start screen: the Lab Example catalog with protocol filters](../../../../assets/screenshots/web-ui-start.png)
+
 The Instructor can start and stop Labs, open Terminals, save the Web UI Layout, and see active Sessions. A Lab Example
 must be registered in `examples/labs.json` before it appears in the list:
 
@@ -137,6 +132,9 @@ python3 util/gen_labs_json.py examples/my-lab.py
 4. Perform only the exercise actions described by the Guide.
 
 If no Lab is running, Learners see a waiting state. They cannot start or stop a Lab.
+
+To give each Group its own Lab instead of one shared Lab, set `MNIPLAB_LAB_MODE=multi`; see
+[Multi-Lab Mode](/docs/features/multi-lab/).
 
 ## 5. Shut down cleanly
 
@@ -179,6 +177,6 @@ Stop and restart `mniplab serve`. Confirm that `.env` is in the core repository 
 and that a shell variable is not overriding it. When `MNIPLAB_USERS` is set, its accounts replace the single-user
 `MNIPLAB_USERNAME` and `MNIPLAB_PASSWORD` pair.
 
-The core repository's source-backed references are [`mniplab serve`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/mniplab/__main__.py),
-the [`.env.example`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/.env.example),
-and the [Web UI guide](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/docs/web-ui.md).
+The core repository's source-backed references are [`mniplab serve`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/mniplab/__main__.py),
+the [`.env.example`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/.env.example),
+and the [Web UI guide](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/docs/web-ui.md).

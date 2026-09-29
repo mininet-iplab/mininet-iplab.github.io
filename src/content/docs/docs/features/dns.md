@@ -1,21 +1,12 @@
 ---
-title: DNS
-description: Add an authoritative Zone or recursive Resolver to a Lab.
+title: Authoritative DNS
+description: Add an authoritative DNS Service with forward and reverse Zones to a Lab.
 ---
 
-<div class="channel-note">
-
-**Development · core revision `a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a`.** This page follows the current Knot DNS and
-Unbound-backed Service APIs.
-
-</div>
-
-DNS is added as a Service on an existing Node. An authoritative Service hosts a Zone; a Resolver Service queries the
-hierarchy or forwards queries for client Hosts.
+DNS is added as a Service on an existing Node. An authoritative Service, backed by Knot DNS, hosts one or more
+Zones and answers for them.
 
 ## Add it to a Lab
-
-### Add an authoritative DNS Service
 
 Create a DNS Host, give it an address, and attach a Zone:
 
@@ -47,18 +38,9 @@ h1 = net.addHost(
 The `nameservers` setting gives the emulated Host its own resolver configuration; it does not change the machine
 running the Lab.
 
-### Add a recursive Resolver
-
-Attach `ResolverService` to a Host or Router. For an in-Lab iterative lesson, seed it with a Root Hint:
-
-```python
-from mniplab.resolver import ResolverService
-
-res1.addService(ResolverService(root_hints=[root1]))
-```
-
-Use `forwarders=[...]` instead when the lesson is about forwarding rather than an in-Lab Root → TLD → Authoritative
-walk.
+To give clients a caching Resolver that walks the hierarchy instead, see
+[Recursive Resolver](/docs/features/dns-resolver/). To replicate a Zone to a second nameserver, see
+[Secondary nameserver](/docs/features/dns-secondary/).
 
 ## Verify it
 
@@ -69,5 +51,13 @@ dig web.example.com
 ping web.example.com
 ```
 
-Inspect a Service with `show_dns dns1`, or use the Web UI DNS panel. See the complete [`DNS.md`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/docs/DNS.md)
-and [`dns-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/examples/dns-lab.py).
+![dns-lab: h1 resolves web.example.com, its reverse name, and pings by name](../../../../assets/screenshots/dns-lab-terminal.png)
+
+Inspect a Service with `show_dns dns1` and `show_dns_records dns1 example.com.` at the Lab Prompt, or select the
+`DNS` badge on `dns1`. The DNS panel lists the Zone's Records and lets a Learner add, edit, or delete them in one
+atomic transaction; **Live Query Activity** counts queries by type and response code as clients ask.
+
+![The DNS Service panel for dns1: the example.com. Zone and its Records](../../../../assets/screenshots/dns-panel.png)
+
+See the complete [`DNS.md`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/docs/DNS.md)
+and [`dns-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/examples/dns-lab.py).

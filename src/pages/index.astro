@@ -1,6 +1,59 @@
 ---
+import { Image } from 'astro:assets';
 import '../styles/landing.css';
 import architectureImage from '../assets/Mininet-Iplab-Architecture.svg';
+import ospfShot from '../assets/screenshots/lab-ospf-lab.png';
+import captureShot from '../assets/screenshots/dhcp-capture.png';
+import natShot from '../assets/screenshots/nat-table.png';
+import resolverShot from '../assets/screenshots/resolver-cache.png';
+import linkShot from '../assets/screenshots/link-condition-modal.png';
+import relayShot from '../assets/screenshots/dhcp-relay-paths.png';
+import { latestVersion } from '../versions';
+
+const gallery = [
+  {
+    image: ospfShot,
+    title: 'Routing you can watch converge',
+    text: 'Nine OSPF Routers in three areas, drawn from the authored Layout.',
+    href: '/docs/features/ospf/',
+    alt: 'The OSPF Routing Lab in Web UI Mode: nine Routers, three switches, and six Hosts',
+  },
+  {
+    image: captureShot,
+    title: 'Packet Capture in the browser',
+    text: 'Watch Discover, Offer, Request, and ACK arrive while the client runs.',
+    href: '/docs/features/packet-capture/',
+    alt: 'A DHCP Packet Capture on r1-eth0 with the Offer decoded field by field',
+  },
+  {
+    image: relayShot,
+    title: 'Services on real daemons',
+    text: 'Kea DHCP with Relays, Knot DNS, and an Unbound Resolver on Lab Nodes.',
+    href: '/docs/features/dhcp-relay/',
+    alt: 'The DHCP Relay Lab with DHCP RELAY badges on two Routers and the central Service on r1',
+  },
+  {
+    image: resolverShot,
+    title: 'Service panels for every Service',
+    text: 'Inspect a Resolver cache, edit DNS Records, or change a DHCP Pool live.',
+    href: '/docs/features/dns-resolver/',
+    alt: 'The Recursive Caching Resolver Cache Inspector with hit counters and cached delegations',
+  },
+  {
+    image: natShot,
+    title: 'NAT you can see',
+    text: 'The NAT Table lists each translated connection as it is created and expires.',
+    href: '/docs/features/nat/',
+    alt: 'The NAT Table for r1 showing two translated ICMP connections',
+  },
+  {
+    image: linkShot,
+    title: 'Link Conditions on demand',
+    text: 'Add delay, loss, or a bandwidth limit to any Link without touching the Topology.',
+    href: '/docs/features/link-conditions/',
+    alt: 'The Configure Link dialog with bandwidth, delay, and loss filled in',
+  },
+];
 
 const paths = [
   {
@@ -22,8 +75,14 @@ const paths = [
     label: 'Learn how to create a Lab',
   },
   {
+    title: 'Browse the Lab Examples',
+    text: 'See all 23 Lab Examples that ship with the core, each with a screenshot of it running.',
+    href: '/docs/lab-examples/',
+    label: 'Open the Lab Example catalog',
+  },
+  {
     title: 'Add a feature',
-    text: 'Use copyable, source-backed patterns for routing, DHCP, DNS, IPv6, containers, and ExaBGP.',
+    text: 'Use copyable patterns for routing, DHCP, DNS, VLANs, NAT, containers, and Web UI observation.',
     href: '/docs/features/',
     label: 'Browse feature recipes',
   },
@@ -63,6 +122,7 @@ const paths = [
       <nav aria-label="Primary navigation">
         <a href="#overview">Overview</a>
         <a href="#architecture">Architecture</a>
+        <a href="#gallery">Screenshots</a>
         <a href="/docs/">Documentation</a>
         <a
           class="nav-action repo-link is-unavailable"
@@ -150,6 +210,28 @@ const paths = [
         </figure>
       </section>
 
+      <section class="gallery shell" id="gallery" aria-labelledby="gallery-title">
+        <div class="section-heading">
+          <h2 id="gallery-title">See a Lab running.</h2>
+          <p>
+            Every screenshot is a real Lab Example from the core repository, running in Web UI Mode. The Lab Example
+            catalog has one for each of the 23 Labs.
+          </p>
+        </div>
+        <ul class="gallery-grid">
+          {gallery.map((item) => (
+            <li>
+              <a class="gallery-item" href={item.href}>
+                <Image src={item.image} alt={item.alt} widths={[480, 720, 960]} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 360px" loading="lazy" />
+                <strong>{item.title}</strong>
+                <span>{item.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p class="gallery-more"><a href="/docs/lab-examples/">Browse all Lab Examples <span aria-hidden="true">→</span></a></p>
+      </section>
+
       <section class="paths shell" aria-labelledby="paths-title">
         <div class="section-heading">
           <h2 id="paths-title">Choose a starting point.</h2>
@@ -168,10 +250,10 @@ const paths = [
 
       <section class="status-band" aria-labelledby="status-title">
         <div class="shell status-content">
-          <h2 id="status-title">Stable and Next documentation.</h2>
+          <h2 id="status-title">Documentation for every release.</h2>
           <p>
-            Stable pages describe the <code>v0.1.0</code> core release. Next pages identify the exact core revision they
-            follow, so instructions stay traceable.
+            The documentation describes Mininet-IPLab <code>{latestVersion.id}</code>. Use the version selector beside the
+            site title in the docs to switch releases; each version links to the matching core source.
           </p>
         </div>
       </section>

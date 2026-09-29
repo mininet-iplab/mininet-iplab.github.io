@@ -47,13 +47,23 @@ test('the landing page presents the project and the ordered documentation path',
   assert.match(landingHtml, /href="\/docs\/build-labs\/"/);
   assert.match(landingHtml, /href="\/docs\/features\/"/);
   assert.match(landingHtml, /href="\/docs\/getting-started\/classroom\/"/);
+  assert.match(landingHtml, /href="\/docs\/lab-examples\/"/);
+});
+
+test('the landing page shows real Web UI screenshots and the documented version', () => {
+  const landingHtml = readFileSync(join(root, 'dist', 'index.html'), 'utf8');
+
+  assert.match(landingHtml, /id="gallery"/);
+  assert.equal((landingHtml.match(/class="gallery-item"/g) ?? []).length, 6);
+  assert.match(landingHtml, /alt="A DHCP Packet Capture on r1-eth0/);
+  assert.match(visibleText(landingHtml), /Mininet-IPLab v0\.1\.0/);
+  assert.doesNotMatch(visibleText(landingHtml), /Next pages|core revision/);
 });
 
 test('the Get Started page gives the stable installation path and platform caveat', () => {
   const gettingStartedHtml = readBuiltPage('docs/getting-started');
   const gettingStartedText = visibleText(gettingStartedHtml);
 
-  assert.match(gettingStartedText, /Stable.*core.*v0\.1\.0/);
   assert.match(gettingStartedText, /Linux-capable host/);
   assert.match(gettingStartedText, /Docker Engine.*Docker Compose/);
   assert.match(gettingStartedText, /Open vSwitch kernel modules.*host/);
@@ -69,7 +79,6 @@ test('the Prerequisites page makes the host checks explicit', () => {
   const prerequisitesHtml = readBuiltPage('docs/getting-started/prerequisites');
   const prerequisitesText = visibleText(prerequisitesHtml);
 
-  assert.match(prerequisitesText, /Stable.*core.*v0\.1\.0/);
   assert.match(prerequisitesText, /64-bit Linux-capable host/);
   assert.match(prerequisitesText, /Docker Engine.*Docker Compose/);
   assert.match(prerequisitesText, /Open vSwitch kernel modules.*host/);
@@ -82,7 +91,6 @@ test('the Classroom deployment page documents mniplab serve and .env roles', () 
   const classroomHtml = readBuiltPage('docs/getting-started/classroom');
   const classroomText = visibleText(classroomHtml);
 
-  assert.match(classroomText, /Development.*core revision/);
   assert.match(classroomText, /mniplab serve/);
   assert.match(classroomText, /examples\/labs\.json/);
   assert.match(classroomText, /Instructor/);
@@ -95,7 +103,7 @@ test('the Classroom deployment page documents mniplab serve and .env roles', () 
   assert.match(classroomText, /docker compose exec mniplab mniplab cleanup/);
   assert.match(
     classroomHtml,
-    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a\/mniplab\/__main__\.py"/,
+    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/v0\.1\.0\/mniplab\/__main__\.py"/,
   );
 });
 
@@ -103,7 +111,7 @@ test('the First Lab quickstart guides static-lab observations and recovery', () 
   const quickstartHtml = readBuiltPage('docs/getting-started/quickstart');
   const quickstartText = visibleText(quickstartHtml);
 
-  assert.match(quickstartText, /Stable.*core.*v0\.1\.0/);
+  assert.match(quickstartText, /v0\.1\.0/);
   assert.match(quickstartText, /static-lab/);
   assert.match(quickstartText, /docker compose build/);
   assert.match(quickstartText, /docker compose up -d/);
@@ -124,7 +132,6 @@ test('the Build Labs guide explains the model and authoring seam', () => {
   const buildLabsHtml = readBuiltPage('docs/build-labs');
   const buildLabsText = visibleText(buildLabsHtml);
 
-  assert.match(buildLabsText, /Development/);
   for (const term of ['Lab', 'Lab Example', 'Guide', 'Topology', 'Node', 'Link', 'Layout']) {
     assert.match(buildLabsText, new RegExp(term), `${term} is missing from the authoring guide`);
   }
@@ -143,7 +150,7 @@ test('the Build Labs guide explains the model and authoring seam', () => {
   assert.match(buildLabsText, /Service is also not a kind of Node/);
   assert.match(buildLabsText, /does not add or remove Nodes.*rewire Links/);
   assert.match(buildLabsText, /Layout.*does not add Nodes/);
-  assert.match(buildLabsText, /examples\/.*lab-name.*layout\.json/);
+  assert.match(buildLabsText, /examples\/labs\.json/);
   assert.match(buildLabsText, /examples\/layouts\/.*lab-id.*json/);
   assert.match(buildLabsText, /examples\/guides\/.*lab-id.*md/);
   assert.match(buildLabsText, /The authoring path/);
@@ -155,11 +162,11 @@ test('the Build Labs guide explains the model and authoring seam', () => {
   );
   assert.match(
     buildLabsHtml,
-    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a\/docs\/CREATE_LAB\.md#services"/,
+    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/v0\.1\.0\/docs\/CREATE_LAB\.md#services"/,
   );
   assert.match(
     buildLabsHtml,
-    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a\/examples\/dhcp-lab\.py"/,
+    /href="https:\/\/github\.com\/mininet-iplab\/mininet-iplab\/blob\/v0\.1\.0\/examples\/dhcp-lab\.py"/,
   );
 });
 
@@ -178,12 +185,18 @@ test('the Features guide and recipes explain how to attach capabilities to a Lab
     'packet-capture',
     'multi-lab',
     'static-routing',
+    'other-protocols',
+    'dhcpv6',
+    'dhcp-relay',
+    'dns-resolver',
+    'dns-secondary',
+    'web-ui',
+    'link-conditions',
+    'lab-prompt',
   ];
-  const updatedPages = new Set(['vlans', 'nat', 'packet-capture', 'multi-lab']);
   const featuresHtml = readBuiltPage('docs/features');
   const featuresText = visibleText(featuresHtml);
 
-  assert.match(featuresText, /Development.*core revision/);
   assert.match(featuresText, /Where does it attach/);
   assert.match(featuresText, /Create a Lab/);
 
@@ -191,34 +204,44 @@ test('the Features guide and recipes explain how to attach capabilities to a Lab
     const html = readBuiltPage(`docs/features/${page}`);
     const pageText = visibleText(html);
 
-    assert.match(pageText, /Development|Experimental/, `${page} maturity is missing`);
     assert.match(pageText, /Add it to a Lab/, `${page} has no authoring section`);
     assert.match(pageText, /Verify it/, `${page} has no verification section`);
-    const sourceRevision = updatedPages.has(page)
-      ? '9c14a8fee2ac40ac430909e4c4390d39662f3c6c'
-      : 'a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a';
-    assert.match(
-      html,
-      new RegExp(`href="https://github\\.com/mininet-iplab/mininet-iplab/blob/${sourceRevision}/`),
-      `${page} does not link to the pinned source revision`,
-    );
+    assert.doesNotMatch(html, /blob\/[0-9a-f]{40}\//, `${page} links to a commit instead of a release`);
   }
 });
 
-test('each published documentation page identifies the Stable release', () => {
-  const stablePages = ['docs', 'docs/getting-started', 'docs/contribute'];
+test('every documentation page offers the version selector and links to release tags, not commits', () => {
+  const pages = ['docs', 'docs/getting-started', 'docs/features', 'docs/features/bgp', 'docs/reference', 'docs/lab-examples'];
 
-  for (const page of stablePages) {
-    assert.match(visibleText(readBuiltPage(page)), /Stable.*core.*v0\.1\.0/, `${page} does not identify Stable v0.1.0`);
+  for (const page of pages) {
+    const html = readBuiltPage(page);
+    assert.match(html, /<version-select[^>]*data-current-base="\/docs\/"/, `${page} has no version selector`);
+    assert.match(html, /<option value="\/docs\/" selected[^>]*>v0\.1\.0 \(latest\)<\/option>/, `${page} does not select v0.1.0`);
+    assert.doesNotMatch(visibleText(html), /core revision|Next channel/, `${page} still describes commit channels`);
+    assert.doesNotMatch(html, /mininet-iplab\/(blob|tree)\/[0-9a-f]{40}/, `${page} links to a commit`);
   }
 });
 
-test('unfinished documentation sections identify themselves as Development', () => {
-  const developmentPages = ['docs/build-labs', 'docs/reference'];
+test('the version registry lists v0.1.0 as the latest version served at /docs/', () => {
+  const versions = readRepoFile('src/versions.ts');
 
-  for (const page of developmentPages) {
-    assert.match(visibleText(readBuiltPage(page)), /Development/, `${page} does not identify Development content`);
-    assert.doesNotMatch(visibleText(readBuiltPage(page)), /Stable.*core.*v0\.1\.0/, `${page} presents unfinished content as Stable`);
+  assert.match(versions, /id: 'v0\.1\.0'.*base: '\/docs\/'/);
+  assert.match(readRepoFile('astro.config.mjs'), /SiteTitle: '\.\/src\/components\/SiteTitle\.astro'/);
+  assert.match(readRepoFile('astro.config.mjs'), /routeMiddleware: '\.\/src\/routeData\.ts'/);
+});
+
+test('the Lab Example catalog shows every shipped Lab Example with a screenshot', () => {
+  const html = readBuiltPage('docs/lab-examples');
+  const labIds = [
+    'benchmark-flagship-lab', 'bgp-dc-lab', 'bgp-ispixp-lab', 'bgp-lab', 'bgp-medlopref-lab', 'bgp-multipath-lab',
+    'bgp-nat-isp-lab', 'exabgp-ipv6-lab', 'exabgp-lab', 'ospf-lab', 'static-lab', 'static-lab-ipv6', 'static-lab-nat',
+    'container-lab', 'dhcp-lab', 'dhcp-lab-rogue', 'dhcpv6-lab', 'dhcp-relay-lab', 'dns-lab', 'dns-resolver-lab',
+    'dns-secondary-lab', 'dnssec-lab', 'vlan-lab',
+  ];
+
+  for (const id of labIds) {
+    assert.match(html, new RegExp(`alt="[^"]*\\(${id}\\) running in Web UI Mode"`), `${id} has no screenshot`);
+    assert.ok(existsSync(join(root, 'src', 'assets', 'screenshots', `lab-${id}.png`)), `lab-${id}.png is missing`);
   }
 });
 
@@ -229,7 +252,17 @@ test('the documentation shell exposes each intent-first navigation destination',
     'getting-started/prerequisites',
     'getting-started/quickstart',
     'getting-started/classroom',
+    'lab-examples',
+    'build-labs/persistent-config',
     'features',
+    'features/other-protocols',
+    'features/dhcpv6',
+    'features/dhcp-relay',
+    'features/dns-resolver',
+    'features/dns-secondary',
+    'features/web-ui',
+    'features/link-conditions',
+    'features/lab-prompt',
     'features/static-routing',
     'features/ospf',
     'features/bgp',

@@ -3,12 +3,6 @@ title: Prerequisites
 description: Prepare the Linux-capable host and container runtime before starting a Lab.
 ---
 
-<div class="channel-note">
-
-**Stable · core v0.1.0.** These requirements apply to the supported Stable installation path.
-
-</div>
-
 Start here. Mininet-IPLab runs in a container, but the container still depends on the host kernel for Linux network
 namespaces, `veth` pairs, and Open vSwitch.
 
@@ -55,7 +49,7 @@ core examples. Do not run the Lab directly on the host unless you intentionally 
 
 ## Ready for the next step?
 
-Continue to the [Quick Start](/docs/getting-started/quickstart/) to clone the Stable core release, start the
+Continue to the [Quick Start](/docs/getting-started/quickstart/) to clone the `v0.1.0` core release, start the
 container, and run `static-lab`.
 
 For host packages, a dev container, and troubleshooting, see the core repository's

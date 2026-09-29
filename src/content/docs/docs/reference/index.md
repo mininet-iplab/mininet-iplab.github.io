@@ -3,13 +3,6 @@ title: Reference
 description: Find precise operational documentation for Mininet-IPLab.
 ---
 
-<div class="channel-note">
-
-**Development · core revision `a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a`.** Use the pinned source links on this page
-when the current-development behavior matters. The Stable channel is `v0.1.0`.
-
-</div>
-
 <p class="doc-lede">Use this page when you already know what you need: a command, setting, or public Python name.</p>
 
 For a guided path, start with [Prerequisites](/docs/getting-started/prerequisites/), [Quick Start](/docs/getting-started/quickstart/),
@@ -84,8 +77,18 @@ Never commit `.env`: it contains credentials. The most-used settings are:
 | `MNIPLAB_SESSION_PER_USER_CAP` | `0` | Maximum Sessions per account; `0` disables the cap. Keep it `0` for intentionally shared classroom accounts. |
 | `MNIPLAB_TERMINAL_PING_INTERVAL` | `15` | WebSocket keepalive interval in seconds. Must be lower than the Terminal idle timeout. |
 | `MNIPLAB_LOGIN_RATE_LIMIT` | `5` | Login attempts per minute per IP. |
+| `MNIPLAB_LAB_MODE` | `single` | `single` runs one Lab for everyone; `multi` runs a Lab per Group. Read at startup only. See [Multi-Lab Mode](/docs/features/multi-lab/). |
+| `MNIPLAB_LAB_CAP` | `4` | Multi-Lab Mode only: the most Labs alive at once on the host. |
+| `MNIPLAB_LAB_BUILDER_TIMEOUT` | `60` | Seconds a Lab may take to build and report ready. |
 
 The full classroom example, including role-based users and production settings, is in [Classroom deployment](/docs/getting-started/classroom/).
+
+## Lab Prompt commands
+
+The `mininet-iplab>` prompt in CLI Mode, and the **Lab Prompt** in Web UI Mode, add network-wide commands such as
+`show_ips`, `show_routes`, `link_config`, `iperf3`, `show_vlans`, `show_leases`, `show_dns`, `show_cache`, and
+`show_speaker` to Mininet's own. The full table is on the [Lab Prompt](/docs/features/lab-prompt/) page; run
+`help <command>` at the prompt for usage.
 
 ## Public Python API
 
@@ -98,21 +101,25 @@ The package exports the main Lab-building seams from `mniplab`:
 | `ContainerHost`, `ContainerIntf`, `ContainerLink` | Run a Docker image as a Lab node. |
 | `IPv6Intf` | Configure IPv6-aware interfaces. |
 | `Service`, `ServiceMixin` | Attach reusable services to Lab nodes. |
-| `DHCPService`, `Pool`, `Relay` | Build DHCPv4/DHCPv6 pools and relays. |
+| `ManagedSwitch` | Open vSwitch switch with per-port VLAN control. |
+| `MasqueradeNAT`, `TransitNAT` | The gateways behind `net.addNAT()` and `net.addTransit()`. |
+| `DHCPService`, `Pool`, `Relay` | Build DHCPv4/DHCPv6 pools and relays. `Reservation` is in `mniplab.dhcp`. |
 | `DNSService`, `Zone`, `SecondaryZone`, record classes | Build authoritative DNS and DNSSEC scenarios. |
+| `mniplab.resolver.ResolverService`, `AccessRule` | Build a recursive caching Resolver and its Access Control. |
+| `mniplab.exabgp.BGPNeighbor`, `make_v4_peer_routes`, `make_v6_peer_routes` | Describe a Speaker's Neighbors and generated routes. |
 | `mnIPLabCLI`, `parse_lab_args`, `run_lab` | Add the interactive CLI and standard Lab entrypoint. |
 | `start_server`, `stop_server` | Start or stop the optional Web UI from Python. |
 
 Start with the [Lab authoring guide](/docs/build-labs/) for composition examples. The exact public exports are defined
-in [`mniplab/__init__.py`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/mniplab/__init__.py),
+in [`mniplab/__init__.py`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/mniplab/__init__.py),
 and the longer API reference remains in the core repository's
-[`docs/api-reference.md`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/docs/api-reference.md).
+[`docs/api-reference.md`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/docs/api-reference.md).
 
 ## Source of truth
 
-When this site and the runtime disagree, use the pinned core revision as the authority:
+When this site and the runtime disagree, use the `v0.1.0` core source as the authority:
 
-- [CLI entrypoint](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/mniplab/__main__.py)
-- [Web UI settings](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/mniplab/webserver/config.py)
-- [Public package exports](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/mniplab/__init__.py)
-- [Core `.env.example`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/.env.example)
+- [CLI entrypoint](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/mniplab/__main__.py)
+- [Web UI settings](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/mniplab/webserver/config.py)
+- [Public package exports](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/mniplab/__init__.py)
+- [Core `.env.example`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/.env.example)

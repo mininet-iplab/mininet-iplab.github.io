@@ -3,13 +3,6 @@ title: How to create a Lab
 description: Turn a lesson plan into a runnable Lab Example, then add the feature it needs.
 ---
 
-<div class="channel-note">
-
-**Development.** This guide uses the `v0.1.0` Lab model. Its Service example follows the Next core commit
-`a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a`; Development documentation is not a compatibility promise.
-
-</div>
-
 An Instructor authors a **Lab Example** in the core repository and uses it to create a **Lab**. The Lab Example is
 the repeatable Python recipe; the Lab is the one emulated network running now. Keep that distinction in mind while
 reading the rest of this guide.
@@ -49,8 +42,8 @@ These terms describe different things:
 | **Topology** | The shape of a Lab: which Nodes exist and which Links join them. | Define Nodes, Links, interface addresses, and any switches in the Lab Example. |
 | **Node** | A participant in a Lab, such as a Host, Router, Speaker, Container Host, or switch. | Choose each Node's role, name, addresses, and configuration. |
 | **Link** | A connection between two Nodes. It carries the traffic being studied. | Connect Nodes and assign the interface parameters needed by the lesson. |
-| **Layout** | Presentation positions for the Topology in Web UI Mode. It changes where Nodes are drawn, not how packets route. | Save the companion file in the location required by the active core revision. |
-| **Guide** | A learner-facing walkthrough that accompanies a Lab Example and explains what to try and observe. | Write the learning path and expected observations in the documentation repository. |
+| **Layout** | Presentation positions for the Topology in Web UI Mode. It changes where Nodes are drawn, not how packets route. | Save it as `examples/layouts/<lab-id>.json` with **View → Save as Authored Layout** in the Web UI. |
+| **Guide** | A learner-facing walkthrough that accompanies a Lab Example and explains what to try and observe. | Write it as `examples/guides/<lab-id>.md`; Web UI Mode shows it in the **Guide** tab. |
 
 The **Topology** is part of the Lab's shape, but a **Layout** is only a visual arrangement of that shape. A **Guide**
 is documentation, not another runtime object. A **Service** is also not a kind of Node: it is a role a Node offers,
@@ -95,6 +88,8 @@ python3 examples/my-lab.py --enable-web
 The optional Layout affects the Web UI drawing only. It does not add Nodes, create Links, assign addresses, or change
 routing state.
 
+![The Guide tab beside a running static-lab, with h1's Terminal open](../../../../assets/screenshots/static-lab-guide.png)
+
 ## Authoring workflow
 
 ### 1. Start with the lesson contract
@@ -115,25 +110,32 @@ canonical small example for the `v0.1.0` release.
 ### 2. Create the Lab Example in the core repository
 
 Runtime work belongs in the [Mininet-IPLab core repository](https://github.com/mininet-iplab/mininet-iplab), not in
-this documentation repository. A `v0.1.0` core-repository layout is:
+this documentation repository. A Lab Example and its companion files use this layout:
 
 ```text
 examples/
-├── my-lab.py
-├── my-lab-layout.json       # optional Web UI Layout
-└── ...
-frr-config/my-lab/           # optional persistent Router configuration
+├── my-lab.py                 # the Lab Example
+├── labs.json                 # the Lab Example catalog shown in the Web UI
+├── layouts/
+│   └── my-lab.json           # optional Web UI Layout
+└── guides/
+    └── my-lab.md             # optional Guide shown in the Guide tab
+frr-config/my-lab/<router>/   # optional Persistent Config
 ```
 
-In `v0.1.0`, the optional Layout is `examples/<lab-name>-layout.json`. The pinned Next core revision uses
-`examples/layouts/<lab-id>.json` for node positions and may use `examples/guides/<lab-id>.md` for an in-app Guide
-pane. That in-app companion is still different from the public Guide authored in this documentation repository;
-never copy executable runtime behavior into the site. Check the active core revision's source-backed authoring guide
-before adding either companion file.
+The Layout is `examples/layouts/<lab-id>.json` and the in-app Guide is `examples/guides/<lab-id>.md`, where
+`<lab-id>` is the Lab Example's file name without `.py`. The Guide tab looks up its file while the Lab is running and
+says so when none exists. See [Persistent Config](/docs/build-labs/persistent-config/) for `frr-config/`.
 
-Keep the executable Lab Example and any runtime configuration beside the core code that owns its behavior. When a
-Guide describes a release, link to the exact source revision instead of copying the Python file into the
-documentation site.
+Register the Lab Example in the Web UI catalog so an Instructor can start it from the browser:
+
+```bash
+python3 util/gen_labs_json.py examples/my-lab.py   # add or update one entry
+python3 util/gen_labs_json.py --check              # list Lab Examples not yet registered
+```
+
+The script detects protocols, the Node count, and whether the Lab Example uses Persistent Config, then asks for a
+name and description and updates `examples/labs.json`.
 
 ### 3. Use the standard runner shape
 
@@ -183,7 +185,7 @@ lesson requires them. Use `addSwitch()` when a shared Layer 2 segment is part of
 
 A **Speaker** is a Node that announces and withdraws routes on demand. ExaBGP is the software used to implement that
 role; it is not the domain term. ExaBGP Speakers are **Experimental**, so label a Lab Example that uses
-`addExaBGP()` accordingly and verify its source revision before teaching it.
+`addExaBGP()` accordingly and tell Learners which parts may still change.
 
 ### 5. Connect Nodes with Links
 
@@ -239,9 +241,8 @@ A Service is a role offered by a Node. Author it by choosing the Node that shoul
 service software and configuration available in the core runtime, and starting or configuring it as part of the Lab
 Example's Node setup. Then document its address, port or query, expected response, and cleanup behavior in the Guide.
 
-There is no generic `net.addService()` object in the `v0.1.0` authoring surface. Do not invent a new Topology kind for
-DHCP, DNS, or a Resolver. The current Development core adds Services to a Host or Router with `node.addService()`.
-For example, the Next DHCP pattern attaches a Pool to a Router and marks a client interface for DHCP:
+There is no generic `net.addService()` and no Service Node type. Add a Service to an existing Host or Router with
+`node.addService()`. For example, this attaches a DHCP Pool to a Router and marks a client interface for DHCP:
 
 ```python
 from mniplab.dhcp import DHCPService, Pool
@@ -252,11 +253,10 @@ r1.addService(DHCPService(
 net.addLink(r1, h1, params1={'ip': '10.50.0.1/24'}, params2={'dhcp4': True})
 ```
 
-This snippet is for the Next core commit named at the top of this page, not for a `v0.1.0` Lab Example. Use the
-[Next `CREATE_LAB.md` Services section](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/docs/CREATE_LAB.md#services)
-and the [Next DHCP Lab Example](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/examples/dhcp-lab.py)
-for the complete source-backed configuration. The Next DNS and Resolver patterns use `DNSService` and
-`ResolverService` in the same way; see the [Next Resolver Lab Example](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/examples/dns-resolver-lab.py).
+`DNSService` and `ResolverService` attach the same way. The [Network Services](/docs/features/dhcp/) feature pages
+show each one, and the core [`CREATE_LAB.md` Services section](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/docs/CREATE_LAB.md#services)
+and [DHCP Lab Example](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/examples/dhcp-lab.py) have the
+complete configuration.
 
 ## Validate and publish the authoring work
 
@@ -276,11 +276,11 @@ For each mode, verify that:
 - the Learner can change only the documented Exercise Configuration; and
 - normal exit and interrupted cleanup stop the Lab without leaving resources behind.
 
-If the Web UI is used, save and review the optional Layout separately. A Layout review should confirm that the drawn
+If the Web UI is used, arrange the Nodes, choose **View → Save as Authored Layout**, and review the saved Layout separately. A Layout review should confirm that the drawn
 Topology is readable; it is not a substitute for testing the Lab's actual Links or routing state.
 
-Finally, add the Guide and its navigation in this documentation repository, mark the channel and core revision, and
-link to the exact Lab Example source. Keep executable runtime changes, tests, and release behavior in the core
+Finally, register the Lab Example in `examples/labs.json`, add its in-app Guide, and link to the Lab Example source
+from any page in this documentation site. Keep executable runtime changes, tests, and release behavior in the core
 repository.
 
 ## Author checklist
@@ -290,5 +290,5 @@ repository.
 - [ ] Lab shape is separate from Learner Exercise Configuration.
 - [ ] CLI Mode and Web UI Mode are both explained when the Lab supports both.
 - [ ] Nodes, Links, addresses, routing, and Services are source-backed by the core repository.
-- [ ] Experimental Speakers are labeled Experimental and incomplete material is labeled Development.
-- [ ] The Guide links to the exact core-repository revision without copying the executable Lab Example.
+- [ ] Experimental Speakers are labeled Experimental.
+- [ ] The Lab Example is registered in `examples/labs.json` and has a Guide and a Layout.

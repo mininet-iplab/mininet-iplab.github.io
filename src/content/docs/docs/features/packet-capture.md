@@ -3,13 +3,6 @@ title: Packet Capture
 description: Observe packets on a Lab Interface and download the capture for deeper analysis.
 ---
 
-<div class="channel-note">
-
-**Development · core revision `9c14a8fee2ac40ac430909e4c4390d39662f3c6c`.** This page follows the current Web UI
-Packet Capture workflow.
-
-</div>
-
 Packet Capture observes one Interface of a running Lab. It helps connect a command in a Node Terminal to the
 protocol messages seen on the wire. A capture does not change the Topology or routing configuration.
 
@@ -24,11 +17,15 @@ Select a protocol preset such as DHCP, DNS, OSPF, BGP, ICMP, or ARP, or enter a 
 use **Download pcap** to analyze the full capture outside the browser. At most two captures can run at once, so you
 can compare packets on either side of a Router.
 
+![A DHCP capture on r1-eth0 in dhcp-lab with the Offer's fields expanded](../../../../assets/screenshots/dhcp-capture.png)
+
 ## Verify it
 
 Capture a Host or Router Interface, then send `ping -c 3 <peer-address>` from a Node Terminal. The capture should
 show ICMP Echo requests and replies. Select a row to inspect its fields and download the pcap before stopping the
 Lab; capture files are removed when the Lab stops. For a guided protocol example, follow the
-[BGP Packet Analysis exercise](https://github.com/mininet-iplab/mininet-iplab/blob/9c14a8fee2ac40ac430909e4c4390d39662f3c6c/examples/guides/bgp-nat-isp-lab.md#packet-analysis).
-The [core Web UI guide](https://github.com/mininet-iplab/mininet-iplab/blob/9c14a8fee2ac40ac430909e4c4390d39662f3c6c/docs/web-ui.md#packet-capture)
+[BGP Packet Analysis exercise](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/examples/guides/bgp-nat-isp-lab.md#packet-analysis).
+![A BGP capture on r1 in bgp-nat-isp-lab after the sessions were reset](../../../../assets/screenshots/bgp-capture.png)
+
+The [core Web UI guide](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/docs/web-ui.md#packet-capture)
 documents filters, capture limits, and pcap retention.

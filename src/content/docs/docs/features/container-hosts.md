@@ -3,13 +3,6 @@ title: Container Hosts
 description: Put a Docker-backed application node inside an emulated network.
 ---
 
-<div class="channel-note">
-
-**Development · core revision `a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a`.** Container Hosts require a Docker daemon
-reachable from the environment running the Lab.
-
-</div>
-
 A Container Host is a Lab Node backed by a Docker image. Use it when the lesson needs real application software,
 such as a web server, database, or client stack, rather than a bare Mininet Host.
 
@@ -51,5 +44,7 @@ nodes
 h1 ping -c 3 10.0.0.2
 ```
 
-The runnable [`container-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/examples/container-lab.py)
+![container-lab: a Terminal inside the Alpine Container Host d1 reaches h1](../../../../assets/screenshots/container-lab.png)
+
+The runnable [`container-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/examples/container-lab.py)
 uses the same pattern. Its Container Host Terminal enters the Docker container rather than a bare network namespace.

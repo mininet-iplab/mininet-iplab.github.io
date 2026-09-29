@@ -1,14 +1,7 @@
 ---
 title: BGP
-description: Add BGP sessions and inter-domain route exchange to a Lab.
+description: Add BGP sessions, inter-domain route exchange, path selection, and multipath to a Lab.
 ---
-
-<div class="channel-note">
-
-**Development · core revision `a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a`.** This page describes the current FRR-backed
-BGP authoring pattern.
-
-</div>
 
 BGP needs two BGP Routers, an addressed Link between their peers, an AS number on each Router, and a `network`
 statement for every prefix that should be advertised.
@@ -51,7 +44,37 @@ exit
 ```
 
 The advertised networks must exist in the Router's route table. Add Host-facing Links or other route sources before
-expecting BGP to announce them.
+expecting BGP to announce them. For iBGP inside an AS, run an OSPF underlay on the same Routers with
+`proto='BGP,OSPF'`, as `bgp-lab` does.
+
+### Steer path selection
+
+Attach route-maps to a neighbor to set the attributes BGP compares. `LOCAL_PREF` chooses the exit from your own AS;
+`MED` (`set metric`) asks a neighboring AS which entrance to use:
+
+```python
+r2.add_frr_config('''
+ip prefix-list H3-NETWORKS seq 5 permit 192.168.2.0/24
+route-map EXPORT_TO_65001 permit 5
+ match ip address prefix-list H3-NETWORKS
+ set metric 50
+exit
+route-map IMPORT_FROM_65001 permit 5
+ set local-preference 100
+exit
+router bgp 65002
+ address-family ipv4 unicast
+  neighbor 10.10.0.1 route-map IMPORT_FROM_65001 in
+  neighbor 10.10.0.1 route-map EXPORT_TO_65001 out
+ exit-address-family
+exit
+''')
+```
+
+To install more than one equal-cost BGP path, add `maximum-paths 2` (or `maximum-paths ibgp 2`) to the address
+family. [`bgp-medlopref-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/examples/bgp-medlopref-lab.py)
+and [`bgp-multipath-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/examples/bgp-multipath-lab.py)
+are complete examples.
 
 ## Verify it
 
@@ -62,6 +85,12 @@ r1 vtysh -c 'show bgp summary'
 r1 vtysh -c 'show bgp ipv4 unicast'
 ```
 
-Use [`bgp-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/examples/bgp-lab.py)
+![bgp-lab: r11's BGP summary shows four Established neighbors across three Autonomous Systems](../../../../assets/screenshots/bgp-lab.png)
+
+Run `vtysh -c 'show bgp ipv4 unicast 192.168.2.0/24'` to see why BGP picked a path: the chosen route is marked
+`best` with the attribute that decided it. [Packet Capture](/docs/features/packet-capture/) with the **BGP** preset
+shows the OPEN, UPDATE, and KEEPALIVE messages when a session resets.
+
+Use [`bgp-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/examples/bgp-lab.py)
 for a complete multi-AS example. Use the source example to compare the configuration with the observed session and
 learned prefixes.

@@ -1,0 +1,30 @@
+---
+import Default from '@astrojs/starlight/components/SiteTitle.astro';
+import VersionSelect from './VersionSelect.astro';
+---
+
+<div class="site-title-group">
+  <Default />
+  <VersionSelect />
+</div>
+
+<style>
+  .site-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+
+  /* On a phone the header has room for the logo and the version selector, not the full title. */
+  @media (max-width: 30rem) {
+    .site-title-group :global(.site-title span) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+</style>

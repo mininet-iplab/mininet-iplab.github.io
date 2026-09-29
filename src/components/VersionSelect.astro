@@ -1,0 +1,40 @@
+---
+import Select from '@astrojs/starlight/components/Select.astro';
+import { latestVersion, versionForPath, versions } from '../versions';
+
+const current = versionForPath(Astro.url.pathname);
+const options = versions.map((version) => ({
+  label: version === latestVersion ? `${version.label} (latest)` : version.label,
+  value: version.base,
+  selected: version === current,
+}));
+---
+
+<version-select data-current-base={current.base}>
+  <Select label="Documentation version" icon="open-book" options={options} width="9.5rem" />
+</version-select>
+
+<script>
+  class VersionSelect extends HTMLElement {
+    constructor() {
+      super();
+      const select = this.querySelector('select');
+      const currentBase = this.dataset.currentBase ?? '/docs/';
+      select?.addEventListener('change', async () => {
+        const targetBase = select.value;
+        const rest = window.location.pathname.startsWith(currentBase)
+          ? window.location.pathname.slice(currentBase.length)
+          : '';
+        const samePage = `${targetBase}${rest}`;
+        // Keep the reader on the same page when the other version has it; otherwise open that version's start page.
+        try {
+          const response = await fetch(samePage, { method: 'HEAD' });
+          window.location.pathname = response.ok ? samePage : targetBase;
+        } catch {
+          window.location.pathname = targetBase;
+        }
+      });
+    }
+  }
+  customElements.define('version-select', VersionSelect);
+</script>

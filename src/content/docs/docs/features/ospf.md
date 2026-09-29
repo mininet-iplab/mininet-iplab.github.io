@@ -3,13 +3,6 @@ title: OSPF
 description: Add OSPF neighbors and dynamic route learning to a Lab.
 ---
 
-<div class="channel-note">
-
-**Development · core revision `a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a`.** This page describes the current FRR-backed
-OSPF authoring pattern.
-
-</div>
-
 OSPF adds dynamic route learning inside one routing domain. It needs Routers with the OSPF daemon enabled, addressed
 Links between them, and FRR configuration that places those networks into an area.
 
@@ -56,5 +49,7 @@ r1 vtysh -c 'show ip ospf neighbor'
 r1 vtysh -c 'show ip route ospf'
 ```
 
-The complete nine-Router example is [`ospf-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/examples/ospf-lab.py).
+![ospf-lab: r1's OSPF neighbors and the routes it learned from them](../../../../assets/screenshots/ospf-lab.png)
+
+The complete nine-Router example is [`ospf-lab.py`](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/examples/ospf-lab.py).
 Use its neighbor and route commands to observe convergence when a Link changes.

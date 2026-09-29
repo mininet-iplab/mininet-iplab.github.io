@@ -3,12 +3,6 @@ title: Contribute
 description: Understand the contribution boundary between the two repositories.
 ---
 
-<div class="channel-note">
-
-**Stable · core v0.1.0.** This documentation channel describes the supported `v0.1.0` core release.
-
-</div>
-
 <p class="doc-lede">Put runtime behavior in the core repository. Put this site’s content and presentation in the
 documentation repository.</p>
 
@@ -25,7 +19,7 @@ tests. This repository owns the landing page, content, navigation, styling, asse
 | Landing page, documentation pages, sidebar, CSS, assets, or Pages deployment | [Documentation repository](https://github.com/mininet-iplab/iplab-landing-page) |
 
 If a change affects both behavior and explanation, update the core first, then update the matching documentation page
-with a link to the exact core revision.
+with a link to the matching source in the core release.
 
 ## Contribute to the core repository
 
@@ -79,8 +73,8 @@ npm test
 ```
 
 Use the existing content structure when adding a page. Keep the path task-oriented, include runnable commands with a
-language identifier, link to the exact core source revision for implementation claims, and label current-development
-behavior separately from Stable `v0.1.0` behavior.
+language identifier, link implementation claims to the core source at the release tag the page documents (for example
+`blob/v0.1.0/...`), and update `src/versions.ts` when a new release is published.
 
 For a documentation-only pull request, check:
 
@@ -92,7 +86,7 @@ For a documentation-only pull request, check:
 
 ## What makes a useful issue or pull request?
 
-For a bug report, include the host OS, Python version, Docker/Compose versions, Mininet-IPLab revision, exact command,
+For a bug report, include the host OS, Python version, Docker/Compose versions, Mininet-IPLab version (`mniplab --version`), exact command,
 expected behavior, actual behavior, and relevant logs. For a feature request, explain the teaching or network-emulation
 scenario, who needs it, and how a learner or Instructor would verify it.
 
@@ -114,5 +108,5 @@ environment, but it still depends on the host Linux kernel and Open vSwitch modu
 Terminal, or classroom credentials as a security boundary; follow the core Web UI configuration guidance before
 sharing a server.
 
-Read the core repository's [CONTRIBUTING.md](https://github.com/mininet-iplab/mininet-iplab/blob/a4a9a6a2c7b03fde838d4ff0c59d68567a858b2a/CONTRIBUTING.md)
+Read the core repository's [CONTRIBUTING.md](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/CONTRIBUTING.md)
 for the complete coding standards, test markers, pull request process, and community guidance.

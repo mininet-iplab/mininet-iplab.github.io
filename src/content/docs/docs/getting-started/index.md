@@ -3,12 +3,6 @@ title: Get Started
 description: Prepare a host and find the first Mininet-IPLab workflow.
 ---
 
-<div class="channel-note">
-
-**Stable · core v0.1.0.** The commands on this page install and run the `v0.1.0` core release.
-
-</div>
-
 <p class="doc-lede">The supported first-success path is Docker Compose on a Linux-capable host, followed by the
 <code>static-lab</code> example.</p>
 

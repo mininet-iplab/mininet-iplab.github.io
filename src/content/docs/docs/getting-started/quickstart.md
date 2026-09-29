@@ -3,12 +3,6 @@ title: First Lab quickstart
 description: Run and observe the canonical static-routing Lab Example.
 ---
 
-<div class="channel-note">
-
-**Stable · core v0.1.0.** This Guide uses the `v0.1.0` core release and its `static-lab` Lab Example.
-
-</div>
-
 <p class="doc-lede"><code>static-lab</code> is the smallest useful success: two Hosts, two Routers, and three Links
 show how an explicit route carries traffic between two networks.</p>
 
@@ -18,7 +12,7 @@ This page has one goal: start a Lab, prove that traffic crosses it, and shut it 
 [Create a Lab](/docs/build-labs/) to author your own example or [Features](/docs/features/) to add a specific
 capability to one.
 
-## 1. Get the Stable source
+## 1. Get the source
 
 Clone the `v0.1.0` core repository and enter its directory:
 
@@ -73,6 +67,8 @@ for `h1` and run:
 ping -c 3 192.168.2.2
 ```
 
+![static-lab in Web UI Mode: h1's Terminal shows the ping replies and the three-hop traceroute](../../../../assets/screenshots/static-lab-terminal.png)
+
 The Host should receive replies from `h2`. The packet crosses the `h1`–`r1`, `r1`–`r2`, and `r2`–`h2` Links. The
 destination network is not directly connected to `r1`, so `r1` uses its static route through `10.10.1.2`.
 
@@ -96,7 +92,8 @@ For the same Lab in CLI Mode, stop the Web UI process with `exit`, then run:
 docker compose exec mniplab python3 examples/static-lab.py
 ```
 
-At the `mininet-iplab>` prompt, try `nodes`, `net`, and `pingall`. Type `exit` when you are finished with the Lab.
+At the `mininet-iplab>` prompt, try `nodes`, `net`, and `pingall`. The same prompt is available in Web UI Mode as the
+[Lab Prompt](/docs/features/lab-prompt/). Type `exit` when you are finished with the Lab.
 
 ## Troubleshooting
 
@@ -150,5 +147,5 @@ After exiting the Lab, stop the Compose service when you no longer need it:
 docker compose down
 ```
 
-The [Stable `v0.1.0` source tree](https://github.com/mininet-iplab/mininet-iplab/tree/v0.1.0) remains authoritative for
+The [`v0.1.0` source tree](https://github.com/mininet-iplab/mininet-iplab/tree/v0.1.0) remains authoritative for
 the executable example, Compose configuration, and runtime behavior.
