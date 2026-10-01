@@ -55,6 +55,7 @@ export default defineConfig({
             { label: 'Overview', slug: 'docs/features' },
             {
               label: 'Routing',
+              collapsed: true,
               items: [
                 { label: 'Static routing', slug: 'docs/features/static-routing' },
                 { label: 'OSPF', slug: 'docs/features/ospf' },
@@ -65,6 +66,7 @@ export default defineConfig({
             },
             {
               label: 'Addressing and switching',
+              collapsed: true,
               items: [
                 { label: 'IPv4 and IPv6', slug: 'docs/features/ipv6' },
                 { label: 'VLANs and switches', slug: 'docs/features/vlans' },
@@ -73,6 +75,7 @@ export default defineConfig({
             },
             {
               label: 'Network Services',
+              collapsed: true,
               items: [
                 { label: 'DHCP', slug: 'docs/features/dhcp' },
                 { label: 'DHCPv6', slug: 'docs/features/dhcpv6' },
@@ -85,10 +88,12 @@ export default defineConfig({
             },
             {
               label: 'Nodes',
+              collapsed: true,
               items: [{ label: 'Container Hosts', slug: 'docs/features/container-hosts' }],
             },
             {
               label: 'Web UI and observation',
+              collapsed: true,
               items: [
                 { label: 'Web UI Mode', slug: 'docs/features/web-ui' },
                 { label: 'Link Conditions', slug: 'docs/features/link-conditions' },
@@ -98,6 +103,7 @@ export default defineConfig({
             },
             {
               label: 'Classroom',
+              collapsed: true,
               items: [{ label: 'Multi-Lab Mode', slug: 'docs/features/multi-lab' }],
             },
           ],
