@@ -1,0 +1,41 @@
+---
+import '../styles/landing.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Publications about Mininet-IPLab. The first one is coming soon." />
+    <link rel="icon" href="/favicon.svg" />
+    <title>Publications · Mininet-IPLab</title>
+  </head>
+  <body>
+    <SiteHeader current="publications" />
+    <main class="publications shell" aria-labelledby="publications-title">
+      <h1 id="publications-title">Publications</h1>
+      <p class="hero-lede">
+        Papers and talks about Mininet-IPLab will be listed here once they are published. The core repository stays
+        private until then.
+      </p>
+
+      <div class="publications-status" role="status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <div>
+          <strong>Coming soon</strong>
+          <span>Nothing has been published yet.</span>
+        </div>
+      </div>
+
+      <p class="publications-next">In the meantime, the documentation already covers the current release.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="/docs/getting-started/quickstart/">Run the Quick Start</a>
+        <a class="button button-secondary" href="/docs/lab-examples/">Browse the Lab Examples</a>
+      </div>
+    </main>
+    <SiteFooter />
+  </body>
+</html>
