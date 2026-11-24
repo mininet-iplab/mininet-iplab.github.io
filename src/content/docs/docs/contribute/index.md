@@ -1,0 +1,123 @@
+---
+title: Contribute
+description: Understand the contribution boundary between the two repositories.
+---
+
+<p class="doc-lede">Put runtime behavior in the core repository. Put this site’s content and presentation in the
+documentation repository.</p>
+
+The core repository owns runtime implementation, package metadata, executable Lab Examples, and behavior-defining
+tests. This repository owns the landing page, content, navigation, styling, assets, and deployment workflow.
+
+## Choose the right repository
+
+| Change | Repository |
+| --- | --- |
+| Python runtime, Mininet integration, FRR, DHCP, DNS, DNSSEC, RPKI, ExaBGP, Lab Authoring, or Web UI behavior | [Core repository](https://github.com/mininet-iplab/mininet-iplab) |
+| Lab Example scripts, layouts, and in-app Guides | [Core repository](https://github.com/mininet-iplab/mininet-iplab) |
+| Runtime tests, packaging, Docker image, or CI | [Core repository](https://github.com/mininet-iplab/mininet-iplab) |
+| Landing page, documentation pages, sidebar, CSS, assets, or Pages deployment | [Documentation repository](https://github.com/mininet-iplab/mininet-iplab.github.io) |
+
+If a change affects both behavior and explanation, update the core first, then update the matching documentation page
+with a link to the matching source in the core release.
+
+## Contribute to the core repository
+
+1. Fork and clone the [core repository](https://github.com/mininet-iplab/mininet-iplab).
+2. Create a focused branch, such as `fix/web-session-timeout` or `feat/dns-lab`.
+3. Make the smallest change that explains the new behavior in code, tests, and documentation.
+4. Run the checks below inside the dev container or the lab image.
+5. Open a pull request against `main` with the problem, solution, test plan, and any host requirements.
+
+### Core checks
+
+The fast suite does not require privileged networking:
+
+```bash
+python -m pytest -m unit -q
+```
+
+The browser suite drives the Web UI with Playwright (about ten minutes), or one area at a time:
+
+```bash
+python -m pytest -m browser
+python -m pytest -m browser_authoring   # Lab Authoring
+python -m pytest -m browser_services    # Service and Speaker panels, captures, NAT Tables
+python -m pytest -m browser_classroom   # Multi-Lab Mode, Groups, the Learner start screen
+python -m pytest -m browser_workspace   # Topology, Terminals, and common controls
+```
+
+For a full local verification when Docker, Mininet, FRR, and Open vSwitch are available, run the privileged
+integration suite. If its tests report *skipped*, `-rs` names the missing host capability:
+
+```bash
+python -m mniplab cleanup
+python -m pytest -m integration -rs
+python -m mniplab cleanup
+```
+
+The CI checks also run:
+
+```bash
+pylint mniplab/ --disable=all --enable=E,F --load-plugins=pylint_pydantic
+mypy mniplab/ --ignore-missing-imports --exclude mniplab/tests
+```
+
+Before submitting a runtime or Lab change, manually verify at least one example:
+
+```bash
+python3 examples/static-lab.py
+python -m mniplab cleanup
+```
+
+If you change Web UI behavior, also run an example with `--enable-web`, check the browser workflow, and verify that
+the relevant classroom or Web UI documentation is updated.
+
+## Contribute to this documentation site
+
+From this repository:
+
+```bash
+npm install
+npm run check
+npm test
+```
+
+Use the existing content structure when adding a page. Keep the path task-oriented, include runnable commands with a
+language identifier, link implementation claims to the core source at the release tag the page documents (for example
+`blob/v0.1.0/...`), and update `src/versions.ts` when a new release is published.
+
+For a documentation-only pull request, check:
+
+- the page appears in the intended sidebar group;
+- links resolve to the generated trailing-slash routes;
+- code blocks match the current core checkout;
+- the page explains what to verify and how to recover from failure; and
+- `npm test` and `npm run check` pass.
+
+## What makes a useful issue or pull request?
+
+For a bug report, include the host OS, Python version, Docker/Compose versions, Mininet-IPLab version (`mniplab --version`), exact command,
+expected behavior, actual behavior, and relevant logs. For a feature request, explain the teaching or network-emulation
+scenario, who needs it, and how a learner or Instructor would verify it.
+
+Pull requests should include:
+
+- a short problem statement and the chosen approach;
+- tests or a manual verification record;
+- documentation updates for changed behavior;
+- cleanup steps if a Lab or privileged test was run; and
+- screenshots or a short recording for meaningful Web UI changes.
+
+Use [GitHub Issues](https://github.com/mininet-iplab/mininet-iplab/issues) for bugs and feature requests. Report
+security issues privately rather than opening a public issue.
+
+## Development boundaries
+
+Mininet-IPLab runs privileged networking workloads. A container or dev container is the supported development
+environment, but it still depends on the host Linux kernel and Open vSwitch modules. Do not treat the Web UI, a Lab
+Terminal, or classroom credentials as a security boundary; follow the core Web UI configuration guidance before
+sharing a server.
+
+Read the core repository's [CONTRIBUTING.md](https://github.com/mininet-iplab/mininet-iplab/blob/v0.1.0/CONTRIBUTING.md)
+for the complete coding standards, test markers, pull request process, and community guidance.

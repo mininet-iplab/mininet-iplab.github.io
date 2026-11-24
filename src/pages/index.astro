@@ -1,0 +1,196 @@
+---
+import { Image } from 'astro:assets';
+import '../styles/landing.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import ArchitectureDiagram from '../components/ArchitectureDiagram.astro';
+import ospfShot from '../assets/screenshots/lab-ospf-lab.png';
+import captureShot from '../assets/screenshots/dhcp-capture.png';
+import natShot from '../assets/screenshots/nat-table.png';
+import resolverShot from '../assets/screenshots/resolver-cache.png';
+import linkShot from '../assets/screenshots/link-condition-modal.png';
+import relayShot from '../assets/screenshots/dhcp-relay-paths.png';
+
+const gallery = [
+  {
+    image: ospfShot,
+    title: 'Routing you can watch converge',
+    text: 'Nine OSPF Routers in three areas, drawn from the authored Layout.',
+    href: '/docs/features/ospf/',
+    alt: 'The OSPF Routing Lab in Web UI Mode: nine Routers, three switches, and six Hosts',
+  },
+  {
+    image: captureShot,
+    title: 'Packet Capture in the browser',
+    text: 'Watch Discover, Offer, Request, and ACK arrive while the client runs.',
+    href: '/docs/features/packet-capture/',
+    alt: 'A DHCP Packet Capture on r1-eth0 with the Offer selected and decoded',
+  },
+  {
+    image: relayShot,
+    title: 'Services on real daemons',
+    text: 'Kea DHCP with Relays, Knot DNS, and an Unbound Resolver on Lab Nodes.',
+    href: '/docs/features/dhcp-relay/',
+    alt: 'The DHCP RELAY badge on r2 and the central DHCP Service on r1',
+  },
+  {
+    image: resolverShot,
+    title: 'Service panels for every Service',
+    text: 'Inspect a Resolver cache, edit DNS Records, or change a DHCP Pool live.',
+    href: '/docs/features/dns-resolver/',
+    alt: 'The Recursive Caching Resolver Cache Inspector with hit counters and cached entries',
+  },
+  {
+    image: natShot,
+    title: 'NAT you can see',
+    text: 'The NAT Table lists each translated connection as it is created and expires.',
+    href: '/docs/features/nat/',
+    alt: 'The NAT Table for r1 showing two translated ICMP connections',
+  },
+  {
+    image: linkShot,
+    title: 'Link Conditions on demand',
+    text: 'Add delay, loss, or a bandwidth limit to any Link without touching the Topology.',
+    href: '/docs/features/link-conditions/',
+    alt: 'The Configure Link dialog with bandwidth, delay, and loss filled in',
+  },
+];
+
+const questions = [
+  {
+    question: 'How do I try it?',
+    text: 'Start the static-routing Lab on one Linux host, send traffic across it, and shut it down cleanly.',
+    href: '/docs/getting-started/quickstart/',
+    label: 'Run the Quick Start',
+  },
+  {
+    question: 'How do I run it for a class?',
+    text: 'Give every Group its own Lab on one host, with Instructor and Learner logins, from python -m mniplab serve.',
+    href: '/docs/getting-started/classroom/',
+    label: 'Set up a classroom',
+  },
+  {
+    question: 'How do I make my own Lab?',
+    text: 'Write a Lab Example in Python, or draw one in the browser with Lab Authoring and publish it to the Lab Catalog.',
+    href: '/docs/build-labs/',
+    label: 'Create a Lab',
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Lightweight routing lab built on Mininet and FRR, for learning, teaching, or experimenting with networks. Run BGP, OSPF, DHCP, DNS and RPKI labs from the CLI or a web UI with in-browser terminals."
+    />
+    <link rel="icon" href="/favicon.svg" />
+    <title>Mininet-IPLab · Lightweight routing lab on Mininet and FRR</title>
+  </head>
+  <body>
+    <SiteHeader current="home" />
+
+    <main>
+      <section class="hero shell" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title"><span>Learn, teach, and experiment with networks.</span> <span>All on <em>one Linux host</em>.</span></h1>
+          <p class="hero-lede">
+            A lightweight routing lab built on Mininet and FRR. Run BGP, OSPF, DHCP, DNS and RPKI labs from the CLI or the
+            browser.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="/docs/getting-started/prerequisites/">Start with prerequisites <span aria-hidden="true">↗</span></a>
+            <a class="button button-secondary" href="/docs/getting-started/quickstart/">Run the Quick Start</a>
+          </div>
+        </div>
+        <figure class="hero-demo">
+          <div class="demo-frame">
+            <img
+              src="/mininet-iplab-demo.gif"
+              alt="Mininet-IPLab Web UI demo, sped up: the Instructor's Class Overview of four Groups running different Labs on one host; BGP routes in a Router Terminal; an OSPF link failure rerouting a traceroute while Packet Capture runs; a DHCP Lease; a DNS Resolver's cache; and a new Lab drawn and previewed in Lab Authoring"
+              width="960"
+              height="540"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+          <figcaption>
+            <strong>Web UI Mode</strong>
+            <span>Running Lab demo</span>
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- <section class="overview shell" id="overview" aria-labelledby="overview-title">
+        <div class="overview-grid">
+          <h2 id="overview-title">A practical way to teach how networks behave.</h2>
+          <p>
+            Instructors create Lab Examples. Learners run and inspect the resulting Labs. Contributors extend the core
+            framework and the documentation around it. The site gives each audience a clear place to begin.
+          </p>
+        </div>
+      </section> -->
+
+      <section class="architecture shell" id="architecture" aria-labelledby="architecture-title">
+        <div class="section-heading">
+          <h2 id="architecture-title">How the system fits together.</h2>
+          <p>
+            Mininet-IPLab extends Mininet with Open vSwitch, routing software, and network Services on a single Linux
+            host. Instructors and Learners interact with a Lab through CLI Mode or the optional Web UI Mode.
+          </p>
+        </div>
+        <ArchitectureDiagram />
+      </section>
+
+      <section class="gallery shell" id="gallery" aria-labelledby="gallery-title">
+        <div class="section-heading">
+          <h2 id="gallery-title">See a Lab running.</h2>
+          <p>
+            Every screenshot is captured from Mininet-IPLab running in Web UI Mode. The Lab Example catalog has one for each
+            of the 14 Lab Examples that ship with the core.
+          </p>
+        </div>
+        <ul class="gallery-grid">
+          {gallery.map((item) => (
+            <li>
+              <a class="gallery-item" href={item.href}>
+                <Image src={item.image} alt={item.alt} widths={[480, 720, 960]} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 360px" loading="lazy" />
+                <strong>{item.title}</strong>
+                <span>{item.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p class="gallery-more"><a href="/docs/lab-examples/">Browse all Lab Examples <span aria-hidden="true">→</span></a></p>
+      </section>
+
+      <section class="questions shell" aria-labelledby="questions-title">
+        <div class="section-heading">
+          <h2 id="questions-title">What do you want to know?</h2>
+          <p>Start from the question closest to yours. The documentation covers everything else.</p>
+        </div>
+        <ul class="question-list">
+          {questions.map((item) => (
+            <li>
+              <a class="question" href={item.href}>
+                <strong>{item.question}</strong>
+                <span class="question-text">{item.text}</span>
+                <span class="question-link">
+                  <span class="question-link-label">{item.label}</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" /></svg>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+    </main>
+
+    <SiteFooter />
+
+  </body>
+</html>

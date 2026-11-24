@@ -1,0 +1,63 @@
+---
+import { latestVersion } from '../versions';
+
+const docs = [
+  { label: 'Prerequisites', href: '/docs/getting-started/prerequisites/' },
+  { label: 'Quick Start', href: '/docs/getting-started/quickstart/' },
+  { label: 'Classroom deployment', href: '/docs/getting-started/classroom/' },
+  { label: 'Create a Lab', href: '/docs/build-labs/' },
+  { label: 'Lab Examples', href: '/docs/lab-examples/' },
+  { label: 'Features', href: '/docs/features/' },
+  { label: 'Contribute', href: '/docs/contribute/' },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div class="footer-about">
+      <a class="footer-brand" href="/">
+        <img src="/mininet-iplab-mark.svg" alt="" width="32" height="32" />
+        <span>Mininet-IPLab</span>
+      </a>
+      <p>
+        A lightweight routing lab built on Mininet and FRR, for learning, teaching, or experimenting with networks.
+      </p>
+      <p class="footer-meta">Open source under the MIT License · Documentation for {latestVersion.id}</p>
+    </div>
+
+    <div class="footer-column" role="navigation" aria-labelledby="footer-docs">
+      <p class="footer-heading" id="footer-docs">Documentation</p>
+      <ul>
+        {docs.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <p class="footer-heading">Contact</p>
+      <ul>
+        <li><a href="mailto:mininet-iplab@ub.ac.id">mininet-iplab@ub.ac.id</a></li>
+        <li>ICN Laboratory</li>
+        <li>Faculty of Computer Science</li>
+        <li>Universitas Brawijaya</li>
+        <li>Malang, East Java, Indonesia</li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <p class="footer-heading">Developed at</p>
+      <div class="footer-lab">
+        <div class="footer-logos">
+          <img src="/universitas-brawijaya.png" alt="Universitas Brawijaya" width="56" height="56" />
+        </div>
+        <span><strong>Information Centric Networking Laboratory</strong> Faculty of Computer Science, Universitas Brawijaya</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="shell footer-bottom">
+    <p>© {year} The Mininet-IPLab authors. Released under the MIT License.</p>
+    <a href="#">Back to top</a>
+  </div>
+</footer>
