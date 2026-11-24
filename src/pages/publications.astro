@@ -2,6 +2,29 @@
 import '../styles/landing.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+
+// The same citation as the core's README and CITATION.cff.
+const poster = {
+  title: 'Mininet-IPLab: Lightweight Multi-Group Routing Labs on a Single Host for Network Education',
+  authors: ['Akbar Fikri Abdillah', 'Izzah Faiq Putri Madani', 'Achmad Basuki', 'Achmad Husni Thamrin'],
+  venue: '21st Asian Internet Engineering Conference (AINTEC 2026)',
+  place: 'Taipei, Taiwan',
+  dates: '1–3 December 2026',
+  program: 'https://interlab.ait.ac.th/aintec2026/program',
+};
+
+const bibtex = `@inproceedings{abdillah2026mininetiplab,
+  author    = {Abdillah, Akbar Fikri and Madani, Izzah Faiq Putri and
+               Basuki, Achmad and Thamrin, Achmad Husni},
+  title     = {Mininet-IPLab: Lightweight Multi-Group Routing Labs on a
+               Single Host for Network Education},
+  booktitle = {21st Asian Internet Engineering Conference (AINTEC 2026)},
+  address   = {Taipei, Taiwan},
+  year      = {2026},
+  month     = dec,
+  note      = {Poster},
+  url       = {https://interlab.ait.ac.th/aintec2026/program}
+}`;
 ---
 
 <!doctype html>
@@ -9,7 +32,7 @@ import SiteFooter from '../components/SiteFooter.astro';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Publications about Mininet-IPLab. The first one is coming soon." />
+    <meta name="description" content="Publications about Mininet-IPLab, starting with its AINTEC 2026 poster, and how to cite it." />
     <link rel="icon" href="/favicon.svg" />
     <title>Publications · Mininet-IPLab</title>
   </head>
@@ -18,24 +41,51 @@ import SiteFooter from '../components/SiteFooter.astro';
     <main class="publications shell" aria-labelledby="publications-title">
       <h1 id="publications-title">Publications</h1>
       <p class="hero-lede">
-        Papers and talks about Mininet-IPLab will be listed here once they are published. The core repository stays
-        private until then.
+        Papers and posters about Mininet-IPLab. If you use it in your teaching or research, please cite the poster.
       </p>
 
-      <div class="publications-status" role="status">
-        <span class="status-dot" aria-hidden="true"></span>
-        <div>
-          <strong>Coming soon</strong>
-          <span>Nothing has been published yet.</span>
-        </div>
-      </div>
-
-      <p class="publications-next">In the meantime, the documentation already covers the current release.</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="/docs/getting-started/quickstart/">Run the Quick Start</a>
-        <a class="button button-secondary" href="/docs/lab-examples/">Browse the Lab Examples</a>
-      </div>
+      <ol class="pub-list">
+        <li class="pub">
+          <time class="pub-year" datetime="2026-12">2026</time>
+          <article class="pub-body" aria-labelledby="pub-aintec2026">
+            <h2 id="pub-aintec2026">{poster.title}</h2>
+            <p class="pub-authors">{poster.authors.join(', ')}</p>
+            <p class="pub-venue">
+              <span class="pub-type">Poster</span>
+              {poster.venue}, {poster.place}, {poster.dates}
+            </p>
+            <div class="pub-actions">
+              <a class="button button-secondary" href={poster.program} rel="noopener noreferrer">
+                Conference program <span aria-hidden="true">↗</span>
+              </a>
+              <button class="button button-secondary" type="button" data-copy-bibtex>Copy BibTeX</button>
+              <span class="pub-copied" role="status" data-copy-status></span>
+            </div>
+            <details class="pub-cite">
+              <summary>Show BibTeX</summary>
+              <pre><code data-bibtex>{bibtex}</code></pre>
+            </details>
+          </article>
+        </li>
+      </ol>
     </main>
     <SiteFooter />
+
+    <script>
+      const button = document.querySelector<HTMLButtonElement>('[data-copy-bibtex]');
+      const source = document.querySelector('[data-bibtex]');
+      const status = document.querySelector('[data-copy-status]');
+      button?.addEventListener('click', async () => {
+        if (!source || !status) return;
+        try {
+          await navigator.clipboard.writeText(source.textContent ?? '');
+          status.textContent = 'Copied';
+        } catch {
+          status.textContent = 'Copy failed: select the BibTeX below instead';
+          source.closest('details')?.setAttribute('open', '');
+        }
+        window.setTimeout(() => (status.textContent = ''), 2400);
+      });
+    </script>
   </body>
 </html>
